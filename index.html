@@ -4221,17 +4221,26 @@ document.addEventListener('DOMContentLoaded', function () {
   const firstPage = document.getElementById('step1');
   if (!firstPage) return;
 
-  firstPage.querySelectorAll('select').forEach(function (field) {
+  const firstPageFields = Array.from(firstPage.querySelectorAll('select'));
+
+  firstPageFields.forEach(function (field, index) {
     field.addEventListener('change', function () {
       if (!field.value || !firstPage.classList.contains('active')) return;
 
       window.setTimeout(function () {
-        window.scrollBy({
-          top: 110,
-          left: 0,
-          behavior: 'smooth'
-        });
-      }, 120);
+        const nextField = firstPageFields[index + 1];
+        const target = nextField
+          ? nextField.closest('.custom-select-wrapper') || nextField
+          : document.getElementById('firstPageCtaRow');
+
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'nearest'
+          });
+        }
+      }, 180);
     });
   });
 })();
