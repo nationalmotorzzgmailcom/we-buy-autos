@@ -1,18 +1,23 @@
 <!DOCTYPE html>
+
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <base target="_top">
 
   <!-- Google tag (gtag.js) -->
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q5HRZK3BLT"></script>
+
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-Q5HRZK3BLT');
   </script>
+
   <!-- Tailwind CSS for sleek, modern UI -->
+
   <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <style>
     .step {
@@ -45,1423 +50,757 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Offer success icon animation */
-    .offer-success-icon {
-      position: relative;
-      background: transparent;
-      color:#FFFFFF;
-    }
-
-    .offer-success-icon svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-
-    /* Small one-time confetti burst from the offer checkmark */
-    .offer-confetti-layer {
-      position: absolute;
-      inset: 0;
-      overflow: visible;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    .offer-confetti-piece {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 6px;
-      height: 10px;
-      border-radius: 2px;
-      opacity: 0;
-      transform: translate(-50%, -50%) rotate(0deg) scale(0.8);
-      animation: offerConfettiBurst 900ms cubic-bezier(.2,.75,.3,1) forwards;
-      animation-delay: var(--delay, 0ms);
-      background: var(--confetti-color, #10B981);
-    }
-
-    .offer-confetti-piece.circle {
-      width: 7px;
-      height: 7px;
-      border-radius: 9999px;
-    }
-
-    @keyframes offerConfettiBurst {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) rotate(0deg) scale(0.55);
-      }
-      12% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-        transform:
-          translate(
-            calc(-50% + var(--x, 0px)),
-            calc(-50% + var(--y, 0px))
-          )
-          rotate(var(--rotation, 180deg))
-          scale(1);
-      }
-    }
-
-    .offer-circle {
-      fill: #D1FAE5;
-      stroke: #10B981;
-      stroke-width: 2;
-      stroke-dasharray: 176;
-      stroke-dashoffset: 176;
-      animation: drawOfferCircle 0.7s ease-out forwards;
-    }
-
-    .offer-check {
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 3;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      transform-origin: 50% 50%;
-      transform: scale(0);
-      opacity: 0;
-      animation: popOfferCheck 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.62s forwards;
-    }
-
-    @keyframes drawOfferCircle {
-      to { stroke-dashoffset: 0; }
-    }
-
-    @keyframes popOfferCheck {
-      0% { transform: scale(0); opacity: 0; }
-      65% { transform: scale(1.18); opacity: 1; }
-      82% { transform: scale(0.92); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    /* Smooth step and screen animations */
-    .step.active {
-      display: block;
-      animation: stepSlideIn 0.34s ease both;
-    }
-
-    .step.slide-back.active {
-      animation-name: stepSlideBackIn;
-    }
-
-    .screen-reveal {
-      animation: screenReveal 0.45s ease both;
-    }
-
-    .offer-card-reveal {
-      animation: offerCardReveal 0.55s ease 0.12s both;
-    }
-
-    button {
-      transform: translateY(0) scale(1);
-      transition: transform 0.12s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    button:active {
-      transform: translateY(1px) scale(0.97);
-    }
-    .bg-black{
-      background:#000 !important;
-      color:#fff !important;
-    }
-    .bg-black:hover,.bg-black:focus,.bg-black:active{
-      background:#000 !important;
-      color:#fff !important;
-    }
-
-    .confirmation-icon {
-      animation: confirmationPop 0.62s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    }
-
-    @keyframes stepSlideIn {
-      from { opacity: 0; transform: translateX(28px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes stepSlideBackIn {
-      from { opacity: 0; transform: translateX(-28px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes screenReveal {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes offerCardReveal {
-      from { opacity: 0; transform: translateY(16px) scale(0.97); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    @keyframes confirmationPop {
-      0% { opacity: 0; transform: scale(0.4); }
-      70% { opacity: 1; transform: scale(1.12); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .offer-circle,
-      .offer-check,
-      .step.active,
-      .step.slide-back.active,
-      .screen-reveal,
-      .offer-card-reveal,
-      .confirmation-icon {
-        animation: none;
-        stroke-dashoffset: 0;
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-
-
-    /* One-question-at-a-time flow for Vehicle Condition */
-    .condition-question {
-      display: none;
-    }
-
-    .condition-question.active {
-      display: block;
-      position: relative;
-      z-index: 50;
-      overflow: visible;
-      animation: stepSlideIn 0.28s ease both;
-    }
-
-    .condition-question.slide-back.active {
-      animation-name: stepSlideBackIn;
-    }
-
-    .condition-question.dropdown-open {
-      position: relative;
-      z-index: 100000 !important;
-      overflow: visible;
-    }
-
-    #conditionQuestionNav {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Custom dropdowns: always open downward */
-    .custom-select-wrapper {
-      position: relative;
-      width: 100%;
-      z-index: 1;
-    }
-    .custom-select-wrapper.open {
-      z-index: 99998;
-    }
-    .custom-native-select {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-    }
-    .custom-select-button {
-      width: 100%;
-      min-height: 42px;
-      padding: 0.5rem 2.5rem 0.5rem 0.5rem;
-      border: 1px solid #D1D5DB;
-      border-radius: 0.5rem;
-      background: #FFFFFF;
-      color: #374151;
-      text-align: left;
-      position: relative;
-      outline: none;
-      transition: border-color 150ms ease, box-shadow 150ms ease, transform 100ms ease;
-    }
-    .custom-select-button:focus,
-    .custom-select-wrapper.open .custom-select-button {
-      border-color: #10B981;
-      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
-    }
-    .custom-select-button::after {
-      content: "";
-      position: absolute;
-      right: 0.9rem;
-      top: 50%;
-      width: 0.5rem;
-      height: 0.5rem;
-      border-right: 2px solid #6B7280;
-      border-bottom: 2px solid #6B7280;
-      transform: translateY(-65%) rotate(45deg);
-      transition: transform 150ms ease;
-    }
-    .custom-select-wrapper.open .custom-select-button::after {
-      transform: translateY(-35%) rotate(225deg);
-    }
-    .custom-select-menu {
-      display: none;
-      position: absolute;
-      top: calc(100% + 6px);
-      left: 0;
-      right: 0;
-      z-index: 99999;
-      max-height: 240px;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      background: #FFFFFF;
-      border: 1px solid #D1D5DB;
-      border-radius: 0.5rem;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
-      padding: 0.25rem;
-      -webkit-overflow-scrolling: touch;
-    }
-    .custom-select-wrapper.open .custom-select-menu {
-      display: block;
-      animation: dropdownDown 140ms ease-out;
-    }
-    .custom-select-option {
-      width: 100%;
-      padding: 0.65rem 0.75rem;
-      border: 0;
-      border-radius: 0.375rem;
-      background: transparent;
-      color: #374151;
-      text-align: left;
-      cursor: pointer;
-    }
-    .custom-select-option:hover,
-    .custom-select-option:focus,
-    .custom-select-option.selected {
-      background:#0F172A;
-      color:#FFFFFF;
-      outline: none;
-    }
-    @keyframes dropdownDown {
-      from { opacity: 0; transform: translateY(-6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    /* Keep open dropdown menus above the Back/Next buttons */
-    #formContainer,
-    #offerForm {
-      position: relative;
-      overflow: visible;
-    }
-
-    #navFooter {
-      position: relative;
-      z-index: 1;
-    }
-
-    .custom-select-wrapper.open ~ * {
-      position: relative;
-      z-index: 0;
-    }
-
-
-    /* Vehicle photo upload step */
-    .photo-guide-card {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(135deg, #EFF6FF 0%, #ECFDF5 100%);
-      border: 1px solid #BFDBFE;
-      border-radius: 1rem;
-      padding: 1rem;
-    }
-
-    .photo-guide-stage {
-      position: relative;
-      height: 180px;
-      margin-top: 0.75rem;
-      border-radius: 0.85rem;
-      background: #F9FAFB;
-      border: 1px dashed #93C5FD;
-      overflow: hidden;
-    }
-
-    .animated-car {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 210px;
-      height: 92px;
-      transform: translate(-50%, -50%);
-    }
-
-    .car-body {
-      position: absolute;
-      left: 15px;
-      right: 15px;
-      bottom: 20px;
-      height: 43px;
-      background: #D1D5DB;
-      border: 3px solid #4B5563;
-      border-radius: 30px 42px 16px 16px;
-    }
-
-    .car-roof {
-      position: absolute;
-      left: 55px;
-      top: 8px;
-      width: 100px;
-      height: 42px;
-      background: #E5E7EB;
-      border: 3px solid #4B5563;
-      border-bottom: 0;
-      border-radius: 45px 45px 4px 4px;
-      transform: skewX(-7deg);
-    }
-
-    .car-window {
-      position: absolute;
-      left: 73px;
-      top: 17px;
-      width: 65px;
-      height: 25px;
-      background: #BFDBFE;
-      border: 2px solid #4B5563;
-      border-radius: 24px 24px 5px 5px;
-    }
-
-    .car-wheel {
-      position: absolute;
-      bottom: 8px;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #1F2937;
-      border: 5px solid #6B7280;
-    }
-
-    .car-wheel.left { left: 42px; }
-    .car-wheel.right { right: 42px; }
-
-    .scan-frame {
-      position: absolute;
-      inset: 8px;
-      border: 3px solid #10B981;
-      border-radius: 0.75rem;
-      box-shadow: 0 0 0 999px rgba(16, 185, 129, 0.04);
-      animation: photoFramePulse 1.8s ease-in-out infinite;
-    }
-
-    .scan-line {
-      position: absolute;
-      left: 10px;
-      right: 10px;
-      height: 3px;
-      top: 15px;
-      border-radius: 99px;
-      background: #10B981;
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
-      animation: scanVehicle 2.4s ease-in-out infinite;
-    }
-
-    .camera-dot {
-      position: absolute;
-      top: 14px;
-      right: 16px;
-      width: 12px;
-      height: 12px;
-      background: #EF4444;
-      border-radius: 50%;
-      animation: cameraBlink 1s steps(2, end) infinite;
-    }
-
-    @keyframes scanVehicle {
-      0%, 100% { top: 18px; opacity: 0.45; }
-      50% { top: 155px; opacity: 1; }
-    }
-
-    @keyframes photoFramePulse {
-      0%, 100% { transform: scale(0.98); opacity: 0.75; }
-      50% { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes cameraBlink {
-      0%, 45% { opacity: 1; }
-      46%, 100% { opacity: 0.25; }
-    }
-
-    .photo-upload-box {
-      display: block;
-      border: 2px dashed #D1D5DB;
-      border-radius: 0.85rem;
-      padding: 0.9rem;
-      background: #FFFFFF;
-      cursor: pointer;
-      transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.12s ease;
-    }
-
-    .photo-upload-box:hover {
-      border-color: #10B981;
-      background: #F0FDF4;
-    }
-
-    .photo-upload-box.has-file {
-      border-style: solid;
-      border-color: #10B981;
-      background:#0F172A;
-    }
-
-    .photo-file-input {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .photo-preview {
-      width: 100%;
-      height: 110px;
-      object-fit: cover;
-      border-radius: 0.65rem;
-      margin-top: 0.65rem;
-      display: none;
-    }
-
-    .photo-preview.visible {
-      display: block;
-    }
-
-
-    /* Modern appraisal photo experience */
-    .photo-progress-wrap {
-      background: #F3F4F6;
-      border-radius: 9999px;
-      height: 10px;
-      overflow: hidden;
-    }
-
-    .photo-progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #10B981, #059669);
-      transition: width 0.3s ease;
-    }
-
-    .photo-card-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.9rem;
-    }
-
-    .modern-photo-card {
-      position: relative;
-      display: block;
-      min-height: 190px;
-      border: 2px dashed #CBD5E1;
-      border-radius: 1rem;
-      background: #FFFFFF;
-      padding: 1rem;
-      cursor: pointer;
-      transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-    }
-
-    .modern-photo-card:hover {
-      transform: translateY(-2px);
-      border-color: #10B981;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-      background: #F8FFFC;
-    }
-
-    .modern-photo-card.has-file {
-      border-style: solid;
-      border-color: #10B981;
-      background:#0F172A;
-    }
-
-    .photo-card-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 0.85rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: #EFF6FF;
-      color: #2563EB;
-      font-size: 1.3rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .photo-check-badge {
-      position: absolute;
-      top: 0.75rem;
-      right: 0.75rem;
-      width: 28px;
-      height: 28px;
-      border-radius: 9999px;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: #10B981;
-      color: #FFFFFF;
-      font-size: 0.85rem;
-      font-weight: 800;
-      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.28);
-    }
-
-    .modern-photo-card.has-file .photo-check-badge {
-      display: flex;
-    }
-
-    .photo-preview {
-      width: 100%;
-      height: 105px;
-      object-fit: cover;
-      border-radius: 0.75rem;
-      margin-top: 0.75rem;
-      display: none;
-      border: 1px solid #D1FAE5;
-    }
-
-    .photo-preview.visible {
-      display: block;
-    }
-
-    .appraisal-note {
-      border: 1px solid #DBEAFE;
-      background: #EFF6FF;
-      border-radius: 0.85rem;
-      padding: 0.85rem 1rem;
-    }
-
-    @media (max-width: 520px) {
-      .photo-card-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-  
-/* Glow only on the active question's input/select box */
-.guided-question.question-attention input,
-.guided-question.question-attention select,
-.guided-question.question-attention .custom-select-button {
-  animation: fieldGlow 1.6s ease-in-out infinite;
-}
-
-@keyframes fieldGlow {
-  0%,100% {
-    box-shadow: 0 0 0 2px rgba(16,185,129,.25), 0 0 10px rgba(16,185,129,.20);
-    border-color:#10B981;
-  }
-  50% {
-    box-shadow: 0 0 0 3px rgba(16,185,129,.45), 0 0 18px rgba(16,185,129,.45);
-    border-color:#10B981;
-  }
-}
-
-/* Do not glow the container */
-.guided-question.question-attention{
-  animation:none !important;
-  box-shadow:none !important;
-  background:transparent !important;
-}
-.guided-question.question-attention::before{
-  content:none !important;
-}
-
-
-
-/* Premium offer page */
-.premium-offer-card {
+/* Offer success icon animation */
+.offer-success-icon {
   position: relative;
-  overflow: hidden;
-  background: #FFFFFF;
-  border: 1px solid #BBF7D0;
-  box-shadow:
-    0 18px 40px rgba(15, 23, 42, 0.08),
-    0 4px 12px rgba(15, 23, 42, 0.05);
+  background: transparent;
+  color:#FFFFFF;
 }
 
-.offer-reveal-header,
-.offer-reveal-card,
-.offer-reveal-steps,
-.offer-reveal-actions {
+.offer-success-icon svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Small one-time confetti burst from the offer checkmark */
+.offer-confetti-layer {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.offer-confetti-piece {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 10px;
+  border-radius: 2px;
   opacity: 0;
-  transform: translateY(14px);
+  transform: translate(-50%, -50%) rotate(0deg) scale(0.8);
+  animation: offerConfettiBurst 900ms cubic-bezier(.2,.75,.3,1) forwards;
+  animation-delay: var(--delay, 0ms);
+  background: var(--confetti-color, #10B981);
 }
 
-.offer-page-revealed .offer-reveal-header {
-  animation: stagedOfferReveal .42s ease forwards;
+.offer-confetti-piece.circle {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
 }
 
-.offer-page-revealed .offer-reveal-card {
-  animation: stagedOfferReveal .52s cubic-bezier(.22,1,.36,1) .16s forwards;
-}
-
-.offer-page-revealed .offer-reveal-steps {
-  animation: stagedOfferReveal .42s ease .34s forwards;
-}
-
-.offer-page-revealed .offer-reveal-actions {
-  animation: stagedOfferReveal .42s ease .5s forwards;
-}
-
-@keyframes stagedOfferReveal {
-  from {
+@keyframes offerConfettiBurst {
+  0% {
     opacity: 0;
-    transform: translateY(14px) scale(.985);
+    transform: translate(-50%, -50%) rotate(0deg) scale(0.55);
   }
-  to {
+  12% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(
+        calc(-50% + var(--x, 0px)),
+        calc(-50% + var(--y, 0px))
+      )
+      rotate(var(--rotation, 180deg))
+      scale(1);
   }
 }
 
-.pickup-availability-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .4rem;
-  padding: .45rem .75rem;
-  border-radius: 9999px;
-  background: #DCFCE7;
-  color: #166534;
-  font-size: .78rem;
-  font-weight: 800;
-  border: 1px solid #BBF7D0;
+.offer-circle {
+  fill: #D1FAE5;
+  stroke: #10B981;
+  stroke-width: 2;
+  stroke-dasharray: 176;
+  stroke-dashoffset: 176;
+  animation: drawOfferCircle 0.7s ease-out forwards;
 }
 
-.pickup-availability-dot {
-  width: .55rem;
-  height: .55rem;
-  border-radius: 9999px;
-  background: #22C55E;
-  box-shadow: 0 0 0 4px rgba(34,197,94,.14);
+.offer-check {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform-origin: 50% 50%;
+  transform: scale(0);
+  opacity: 0;
+  animation: popOfferCheck 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.62s forwards;
+}
+
+@keyframes drawOfferCircle {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes popOfferCheck {
+  0% { transform: scale(0); opacity: 0; }
+  65% { transform: scale(1.18); opacity: 1; }
+  82% { transform: scale(0.92); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Smooth step and screen animations */
+.step.active {
+  display: block;
+  animation: stepSlideIn 0.34s ease both;
+}
+
+.step.slide-back.active {
+  animation-name: stepSlideBackIn;
+}
+
+.screen-reveal {
+  animation: screenReveal 0.45s ease both;
+}
+
+.offer-card-reveal {
+  animation: offerCardReveal 0.55s ease 0.12s both;
+}
+
+button {
+  transform: translateY(0) scale(1);
+  transition: transform 0.12s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:active {
+  transform: translateY(1px) scale(0.97);
+}
+.bg-black{
+  background:#000 !important;
+  color:#fff !important;
+}
+.bg-black:hover,.bg-black:focus,.bg-black:active{
+  background:#000 !important;
+  color:#fff !important;
+}
+
+.confirmation-icon {
+  animation: confirmationPop 0.62s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes stepSlideIn {
+  from { opacity: 0; transform: translateX(28px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes stepSlideBackIn {
+  from { opacity: 0; transform: translateX(-28px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes screenReveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes offerCardReveal {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes confirmationPop {
+  0% { opacity: 0; transform: scale(0.4); }
+  70% { opacity: 1; transform: scale(1.12); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .offer-reveal-header,
-  .offer-reveal-card,
-  .offer-reveal-steps,
-  .offer-reveal-actions {
+  .offer-circle,
+  .offer-check,
+  .step.active,
+  .step.slide-back.active,
+  .screen-reveal,
+  .offer-card-reveal,
+  .confirmation-icon {
+    animation: none;
+    stroke-dashoffset: 0;
+    transform: scale(1);
     opacity: 1;
-    transform: none;
-    animation: none !important;
   }
 }
 
 
 
-/* Compact cash-offer page matching the reference screenshot */
-.compact-offer-card {
-  background:#0F172A;
-  border:2px solid #3B82F6;
-  border-radius: 0.85rem;
-  padding: 1.2rem 1.25rem 1.05rem;
-  box-shadow: none;
+/* One-question-at-a-time flow for Vehicle Condition */
+.condition-question {
+  display: none;
 }
-.compact-offer-label {
+
+.condition-question.active {
   display: block;
-  color:#FFFFFF;
-  font-size: 0.68rem;
-  line-height: 1;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 0.55rem;
+  position: relative;
+  z-index: 50;
+  overflow: visible;
+  animation: stepSlideIn 0.28s ease both;
 }
-.compact-offer-value {
-  display: block;
-  color:#FFFFFF;
-  font-size: 3.6rem;
-  line-height: 1;
-  font-weight: 900;
-  letter-spacing: -0.035em;
-  margin-bottom: 0.65rem;
+
+.condition-question.slide-back.active {
+  animation-name: stepSlideBackIn;
+}
+
+.condition-question.dropdown-open {
+  position: relative;
+  z-index: 100000 !important;
+  overflow: visible;
+}
+
+#conditionQuestionNav {
   position: relative;
   z-index: 1;
 }
 
-.offer-market-text {
-  margin: 0 auto 1.05rem;
-  max-width: 18.5rem;
-  color: rgba(255,255,255,0.78);
-  font-size: 0.78rem;
-  font-weight: 600;
-  line-height: 1.45;
+/* Custom dropdowns: always open downward */
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+  z-index: 1;
 }
-
-@keyframes finalOfferGreenGlow {
-  0% {
-    text-shadow:
-      0 0 0 rgba(34,197,94,0),
-      0 0 0 rgba(34,197,94,0);
-    transform: scale(1);
-  }
-  35% {
-    text-shadow:
-      0 0 18px rgba(34,197,94,0.9),
-      0 0 38px rgba(34,197,94,0.6),
-      0 0 62px rgba(34,197,94,0.35);
-    transform: scale(1.035);
-  }
-  100% {
-    text-shadow:
-      0 0 0 rgba(34,197,94,0),
-      0 0 0 rgba(34,197,94,0);
-    transform: scale(1);
-  }
+.custom-select-wrapper.open {
+  z-index: 99998;
 }
-
-.compact-offer-value.offer-green-glow {
-  animation: finalOfferGreenGlow 0.8s ease-out;
+.custom-native-select {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .compact-offer-value.offer-green-glow {
-    animation: none;
-  }
-}
-.compact-benefits {
-  width: max-content;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: left;
-  color: #1F2937;
-  font-size: 0.78rem;
-  font-weight: 700;
-  line-height: 1.9;
-}
-.compact-benefits span {
-  display: inline-block;
-  width: 1.05rem;
-  color:#FFFFFF;
-  font-weight: 900;
-}
-.compact-pickup-message {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  color:#FFFFFF;
-  font-size: 0.78rem;
-  line-height: 1.35;
-  font-weight: 900;
-  margin-top: 0.95rem;
-  padding: 0.55rem 0.85rem;
-  background:#1E3A8A;
-  border:2px solid #3B82F6;
-  border-radius: 9999px;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.14);
-}
-.compact-pickup-message::before {
-  content: "";
-  width: 0.55rem;
-  height: 0.55rem;
-  flex: 0 0 0.55rem;
-  border-radius: 9999px;
-  background: #10B981;
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.14);
-}
-.compact-pickup-day {
-  color:#FFFFFF;
-  font-weight: 950;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.compact-how-it-works h3 {
+.custom-select-button {
+  width: 100%;
+  min-height: 42px;
+  padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+  border: 1px solid #D1D5DB;
+  border-radius: 0.5rem;
+  background: #FFFFFF;
   color: #374151;
-  font-size: 0.82rem;
-  font-weight: 800;
-  padding-bottom: 0.5rem;
-  margin-bottom: 0.6rem;
-  border-bottom: 1px solid #E5E7EB;
+  text-align: left;
+  position: relative;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 100ms ease;
 }
-.compact-step-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #6B7280;
-  font-size: 0.76rem;
-  line-height: 1.4;
-  margin-bottom: 0.45rem;
+.custom-select-button:focus,
+.custom-select-wrapper.open .custom-select-button {
+  border-color: #10B981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
 }
-.compact-step-number {
-  width: 1.15rem;
-  height: 1.15rem;
-  flex: 0 0 1.15rem;
+.custom-select-button::after {
+  content: "";
+  position: absolute;
+  right: 0.9rem;
+  top: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid #6B7280;
+  border-bottom: 2px solid #6B7280;
+  transform: translateY(-65%) rotate(45deg);
+  transition: transform 150ms ease;
+}
+.custom-select-wrapper.open .custom-select-button::after {
+  transform: translateY(-35%) rotate(225deg);
+}
+.custom-select-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  max-height: 240px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  border-radius: 0.5rem;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+  padding: 0.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+.custom-select-wrapper.open .custom-select-menu {
+  display: block;
+  animation: dropdownDown 140ms ease-out;
+}
+.custom-select-option {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: #374151;
+  text-align: left;
+  cursor: pointer;
+}
+.custom-select-option:hover,
+.custom-select-option:focus,
+.custom-select-option.selected {
+  background:#0F172A;
+  color:#FFFFFF;
+  outline: none;
+}
+@keyframes dropdownDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Keep open dropdown menus above the Back/Next buttons */
+#formContainer,
+#offerForm {
+  position: relative;
+  overflow: visible;
+}
+
+#navFooter {
+  position: relative;
+  z-index: 1;
+}
+
+.custom-select-wrapper.open ~ * {
+  position: relative;
+  z-index: 0;
+}
+
+
+/* Vehicle photo upload step */
+.photo-guide-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #EFF6FF 0%, #ECFDF5 100%);
+  border: 1px solid #BFDBFE;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.photo-guide-stage {
+  position: relative;
+  height: 180px;
+  margin-top: 0.75rem;
+  border-radius: 0.85rem;
+  background: #F9FAFB;
+  border: 1px dashed #93C5FD;
+  overflow: hidden;
+}
+
+.animated-car {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 210px;
+  height: 92px;
+  transform: translate(-50%, -50%);
+}
+
+.car-body {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 20px;
+  height: 43px;
+  background: #D1D5DB;
+  border: 3px solid #4B5563;
+  border-radius: 30px 42px 16px 16px;
+}
+
+.car-roof {
+  position: absolute;
+  left: 55px;
+  top: 8px;
+  width: 100px;
+  height: 42px;
+  background: #E5E7EB;
+  border: 3px solid #4B5563;
+  border-bottom: 0;
+  border-radius: 45px 45px 4px 4px;
+  transform: skewX(-7deg);
+}
+
+.car-window {
+  position: absolute;
+  left: 73px;
+  top: 17px;
+  width: 65px;
+  height: 25px;
+  background: #BFDBFE;
+  border: 2px solid #4B5563;
+  border-radius: 24px 24px 5px 5px;
+}
+
+.car-wheel {
+  position: absolute;
+  bottom: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #1F2937;
+  border: 5px solid #6B7280;
+}
+
+.car-wheel.left { left: 42px; }
+.car-wheel.right { right: 42px; }
+
+.scan-frame {
+  position: absolute;
+  inset: 8px;
+  border: 3px solid #10B981;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 0 999px rgba(16, 185, 129, 0.04);
+  animation: photoFramePulse 1.8s ease-in-out infinite;
+}
+
+.scan-line {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  height: 3px;
+  top: 15px;
+  border-radius: 99px;
+  background: #10B981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+  animation: scanVehicle 2.4s ease-in-out infinite;
+}
+
+.camera-dot {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 12px;
+  height: 12px;
+  background: #EF4444;
+  border-radius: 50%;
+  animation: cameraBlink 1s steps(2, end) infinite;
+}
+
+@keyframes scanVehicle {
+  0%, 100% { top: 18px; opacity: 0.45; }
+  50% { top: 155px; opacity: 1; }
+}
+
+@keyframes photoFramePulse {
+  0%, 100% { transform: scale(0.98); opacity: 0.75; }
+  50% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes cameraBlink {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0.25; }
+}
+
+.photo-upload-box {
+  display: block;
+  border: 2px dashed #D1D5DB;
+  border-radius: 0.85rem;
+  padding: 0.9rem;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.12s ease;
+}
+
+.photo-upload-box:hover {
+  border-color: #10B981;
+  background: #F0FDF4;
+}
+
+.photo-upload-box.has-file {
+  border-style: solid;
+  border-color: #10B981;
+  background:#0F172A;
+}
+
+.photo-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.photo-preview {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 0.65rem;
+  margin-top: 0.65rem;
+  display: none;
+}
+
+.photo-preview.visible {
+  display: block;
+}
+
+
+/* Modern appraisal photo experience */
+.photo-progress-wrap {
+  background: #F3F4F6;
+  border-radius: 9999px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.photo-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #10B981, #059669);
+  transition: width 0.3s ease;
+}
+
+.photo-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.modern-photo-card {
+  position: relative;
+  display: block;
+  min-height: 190px;
+  border: 2px dashed #CBD5E1;
+  border-radius: 1rem;
+  background: #FFFFFF;
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.modern-photo-card:hover {
+  transform: translateY(-2px);
+  border-color: #10B981;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  background: #F8FFFC;
+}
+
+.modern-photo-card.has-file {
+  border-style: solid;
+  border-color: #10B981;
+  background:#0F172A;
+}
+
+.photo-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 0.85rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9999px;
-  background: #DBEAFE;
-  color: #3B82F6;
-  font-size: 0.66rem;
-  font-weight: 800;
-}
-@media (max-width: 380px) {
-  .compact-offer-value { font-size: 3.1rem; }
+  background: #EFF6FF;
+  color: #2563EB;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
 }
 
+.photo-check-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: #10B981;
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.28);
+}
+
+.modern-photo-card.has-file .photo-check-badge {
+  display: flex;
+}
+
+.photo-preview {
+  width: 100%;
+  height: 105px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  margin-top: 0.75rem;
+  display: none;
+  border: 1px solid #D1FAE5;
+}
+
+.photo-preview.visible {
+  display: block;
+}
+
+.appraisal-note {
+  border: 1px solid #DBEAFE;
+  background: #EFF6FF;
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+}
+
+@media (max-width: 520px) {
+  .photo-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Glow only on the active question's input/select box */.guided-question.question-attention input,.guided-question.question-attention select,.guided-question.question-attention .custom-select-button {animation: fieldGlow 1.6s ease-in-out infinite;}
+
+@keyframes fieldGlow {0%,100% {box-shadow: 0 0 0 2px rgba(16,185,129,.25), 0 0 10px rgba(16,185,129,.20);border-color:#10B981;}50% {box-shadow: 0 0 0 3px rgba(16,185,129,.45), 0 0 18px rgba(16,185,129,.45);border-color:#10B981;}}
+
+/* Do not glow the container */.guided-question.question-attention{animation !important;box-shadow !important;background !important;}.guided-question.question-attention::before{content !important;}
+
+
+
+/* Premium offer page */.premium-offer-card {position: relative;overflow: hidden;background: #FFFFFF;border: 1px solid #BBF7D0;box-shadow:0 18px 40px rgba(15, 23, 42, 0.08),0 4px 12px rgba(15, 23, 42, 0.05);}
+
+.offer-reveal-header,.offer-reveal-card,.offer-reveal-steps,.offer-reveal-actions {opacity: 0;transform: translateY(14px);}
+
+.offer-page-revealed .offer-reveal-header {animation: stagedOfferReveal .42s ease forwards;}
+
+.offer-page-revealed .offer-reveal-card {animation: stagedOfferReveal .52s cubic-bezier(.22,1,.36,1) .16s forwards;}
+
+.offer-page-revealed .offer-reveal-steps {animation: stagedOfferReveal .42s ease .34s forwards;}
+
+.offer-page-revealed .offer-reveal-actions {animation: stagedOfferReveal .42s ease .5s forwards;}
+
+@keyframes stagedOfferReveal {from {opacity: 0;transform: translateY(14px) scale(.985);}to {opacity: 1;transform: translateY(0) scale(1);}}
+
+.pickup-availability-badge {display: inline-flex;align-items: center;justify-content: center;gap: .4rem;padding: .45rem .75rem;border-radius: 9999px;background: #DCFCE7;color: #166534;font-size: .78rem;font-weight: 800;border: 1px solid #BBF7D0;}
+
+.pickup-availability-dot {width: .55rem;height: .55rem;border-radius: 9999px;background: #22C55E;box-shadow: 0 0 0 4px rgba(34,197,94,.14);}
+
+@media (prefers-reduced-motion: reduce) {.offer-reveal-header,.offer-reveal-card,.offer-reveal-steps,.offer-reveal-actions {opacity: 1;transform: none;animation: none !important;}}
+
+
+
+/* Compact cash-offer page matching the reference screenshot */.compact-offer-card {background:#0F172A;border:2px solid #3B82F6;border-radius: 0.85rem;padding: 1.2rem 1.25rem 1.05rem;box-shadow: none;}.compact-offer-label {display: block;color:#FFFFFF;font-size: 0.68rem;line-height: 1;font-weight: 800;letter-spacing: 0.14em;text-transform: uppercase;margin-bottom: 0.55rem;}.compact-offer-value {display: block;color:#FFFFFF;font-size: 3.6rem;line-height: 1;font-weight: 900;letter-spacing: -0.035em;margin-bottom: 0.65rem;position: relative;z-index: 1;}
+
+.offer-market-text {margin: 0 auto 1.05rem;max-width: 18.5rem;color: rgba(255,255,255,0.78);font-size: 0.78rem;font-weight: 600;line-height: 1.45;}
+
+@keyframes finalOfferGreenGlow {0% {text-shadow:0 0 0 rgba(34,197,94,0),0 0 0 rgba(34,197,94,0);transform: scale(1);}35% {text-shadow:0 0 18px rgba(34,197,94,0.9),0 0 38px rgba(34,197,94,0.6),0 0 62px rgba(34,197,94,0.35);transform: scale(1.035);}100% {text-shadow:0 0 0 rgba(34,197,94,0),0 0 0 rgba(34,197,94,0);transform: scale(1);}}
+
+.compact-offer-value.offer-green-glow {animation: finalOfferGreenGlow 0.8s ease-out;}
+
+@media (prefers-reduced-motion: reduce) {.compact-offer-value.offer-green-glow {animation: none;}}.compact-benefits {width: max-content;max-width: 100%;margin: 0 auto;text-align: left;color: #1F2937;font-size: 0.78rem;font-weight: 700;line-height: 1.9;}.compact-benefits span {display: inline-block;width: 1.05rem;color:#FFFFFF;font-weight: 900;}.compact-pickup-message {display: inline-flex;align-items: center;justify-content: center;gap: 0.45rem;color:#FFFFFF;font-size: 0.78rem;line-height: 1.35;font-weight: 900;margin-top: 0.95rem;padding: 0.55rem 0.85rem;background:#1E3A8A;border:2px solid #3B82F6;border-radius: 9999px;box-shadow: 0 4px 12px rgba(16, 185, 129, 0.14);}.compact-pickup-message::before {content: "";width: 0.55rem;height: 0.55rem;flex: 0 0 0.55rem;border-radius: 9999px;background: #10B981;box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.14);}.compact-pickup-day {color:#FFFFFF;font-weight: 950;text-transform: uppercase;letter-spacing: 0.04em;}.compact-how-it-works h3 {color: #374151;font-size: 0.82rem;font-weight: 800;padding-bottom: 0.5rem;margin-bottom: 0.6rem;border-bottom: 1px solid #E5E7EB;}.compact-step-row {display: flex;align-items: center;gap: 0.5rem;color: #6B7280;font-size: 0.76rem;line-height: 1.4;margin-bottom: 0.45rem;}.compact-step-number {width: 1.15rem;height: 1.15rem;flex: 0 0 1.15rem;display: inline-flex;align-items: center;justify-content: center;border-radius: 9999px;background: #DBEAFE;color: #3B82F6;font-size: 0.66rem;font-weight: 800;}@media (max-width: 380px) {.compact-offer-value { font-size: 3.1rem; }}
 
 /* FINAL TARGETED CONTRAST FIXES */
 
-/* All Back buttons: permanent solid black with white text */
-#conditionBackBtn,
-#prevBtn,
-#step4 button[onclick="goBackToOfferFromPhotos()"],
-#offerResultContainer button[onclick="goBackToForm()"],
-#notPurchasingContainer button[onclick="goBackFromSorryScreen()"],
-#finalReviewContainer button[onclick="goBackToPickupForm()"] {
-  background: #000000 !important;
-  color: #FFFFFF !important;
-  border-color: #000000 !important;
-  box-shadow: none !important;
-}
+/* All Back buttons: permanent solid black with white text */#conditionBackBtn,#prevBtn,#step4 button[onclick="goBackToOfferFromPhotos()"],#offerResultContainer button[onclick="goBackToForm()"],#notPurchasingContainer button[onclick="goBackFromSorryScreen()"],#finalReviewContainer button[onclick="goBackToPickupForm()"] {background: #000000 !important;color: #FFFFFF !important;border-color: #000000 !important;box-shadow: none !important;}
 
-#conditionBackBtn:hover,
-#conditionBackBtn:focus,
-#conditionBackBtn:active,
-#prevBtn:hover,
-#prevBtn:focus,
-#prevBtn:active,
-#step4 button[onclick="goBackToOfferFromPhotos()"]:hover,
-#step4 button[onclick="goBackToOfferFromPhotos()"]:focus,
-#step4 button[onclick="goBackToOfferFromPhotos()"]:active,
-#offerResultContainer button[onclick="goBackToForm()"]:hover,
-#offerResultContainer button[onclick="goBackToForm()"]:focus,
-#offerResultContainer button[onclick="goBackToForm()"]:active,
-#notPurchasingContainer button[onclick="goBackFromSorryScreen()"]:hover,
-#notPurchasingContainer button[onclick="goBackFromSorryScreen()"]:focus,
-#notPurchasingContainer button[onclick="goBackFromSorryScreen()"]:active,
-#finalReviewContainer button[onclick="goBackToPickupForm()"]:hover,
-#finalReviewContainer button[onclick="goBackToPickupForm()"]:focus,
-#finalReviewContainer button[onclick="goBackToPickupForm()"]:active {
-  background: #000000 !important;
-  color: #FFFFFF !important;
-  border-color: #000000 !important;
-}
+#conditionBackBtn,#conditionBackBtn,#conditionBackBtn,#prevBtn,#prevBtn,#prevBtn,#step4 button[onclick="goBackToOfferFromPhotos()"],#step4 button[onclick="goBackToOfferFromPhotos()"],#step4 button[onclick="goBackToOfferFromPhotos()"],#offerResultContainer button[onclick="goBackToForm()"],#offerResultContainer button[onclick="goBackToForm()"],#offerResultContainer button[onclick="goBackToForm()"],#notPurchasingContainer button[onclick="goBackFromSorryScreen()"],#notPurchasingContainer button[onclick="goBackFromSorryScreen()"],#notPurchasingContainer button[onclick="goBackFromSorryScreen()"],#finalReviewContainer button[onclick="goBackToPickupForm()"],#finalReviewContainer button[onclick="goBackToPickupForm()"],#finalReviewContainer button[onclick="goBackToPickupForm()"] {background: #000000 !important;color: #FFFFFF !important;border-color: #000000 !important;}
 
-/* Offer page: bright white copy on dark backgrounds */
-.compact-benefits,
-.compact-benefits div,
-.compact-benefits span,
-.compact-how-it-works h3,
-.compact-step-row,
-.compact-step-row span {
-  color: #FFFFFF !important;
-}
+/* Offer page: bright white copy on dark backgrounds */.compact-benefits,.compact-benefits div,.compact-benefits span,.compact-how-it-works h3,.compact-step-row,.compact-step-row span {color: #FFFFFF !important;}
 
-.compact-step-number {
-  background: #FFFFFF !important;
-  color: #111827 !important;
-}
+.compact-step-number {background: #FFFFFF !important;color: #111827 !important;}
 
-/* White fields/cards must always use dark text */
-input,
-select,
-textarea,
-.custom-select-button,
-.custom-select-option {
-  color: #111827 !important;
-}
+/* White fields/cards must always use dark text */input,select,textarea,.custom-select-button,.custom-select-option {color: #111827 !important;}
 
-input::placeholder,
-textarea::placeholder {
-  color: #9CA3AF !important;
-  opacity: 1 !important;
-}
+input::placeholder,textarea::placeholder {color: #9CA3AF !important;opacity: 1 !important;}
 
-/* Keep native date/select controls readable */
-input[type="date"],
-#pickupTime,
-#fullName,
-#phone,
-#street,
-#city,
-#zip {
-  background: #FFFFFF !important;
-  color: #111827 !important;
-  -webkit-text-fill-color: #111827 !important;
-  caret-color: #111827 !important;
-}
+/* Keep native date/select controls readable */input[type="date"],#pickupTime,#fullName,#phone,#street,#city,#zip {background: #FFFFFF !important;color: #111827 !important;-webkit-text-fill-color: #111827 !important;caret-color: #111827 !important;}
 
-/* White cards and pale panels use dark copy */
-.bg-white,
-.bg-gray-50,
-.bg-blue-50,
-.appraisal-note,
-.photo-guide-card,
-.modern-photo-card,
-.photo-upload-box,
-#finalReviewContainer .max-w-sm.bg-gray-50,
-#finalSuccessContainer .max-w-sm.bg-gray-50 {
-  color: #111827 !important;
-}
+/* White cards and pale panels use dark copy */.bg-white,.bg-gray-50,.bg-blue-50,.appraisal-note,.photo-guide-card,.modern-photo-card,.photo-upload-box,#finalReviewContainer .max-w-sm.bg-gray-50,#finalSuccessContainer .max-w-sm.bg-gray-50 {color: #111827 !important;}
 
-.bg-white *,
-.bg-gray-50 *,
-.bg-blue-50 *,
-.appraisal-note *,
-.photo-guide-card *,
-.modern-photo-card *,
-.photo-upload-box *,
-#finalReviewContainer .max-w-sm.bg-gray-50 *,
-#finalSuccessContainer .max-w-sm.bg-gray-50 * {
-  color: inherit;
-}
+.bg-white *,.bg-gray-50 *,.bg-blue-50 *,.appraisal-note *,.photo-guide-card *,.modern-photo-card *,.photo-upload-box *,#finalReviewContainer .max-w-sm.bg-gray-50 *,#finalSuccessContainer .max-w-sm.bg-gray-50 * {color: inherit;}
 
-/* Preserve button text colors inside light cards */
-.bg-white button.bg-green-500,
-.bg-gray-50 button.bg-green-500,
-.bg-blue-50 button.bg-green-500 {
-  color: #FFFFFF !important;
-}
+/* Preserve button text colors inside light cards */.bg-white button.bg-green-500,.bg-gray-50 button.bg-green-500,.bg-blue-50 button.bg-green-500 {color: #FFFFFF !important;}
 
-/* Dark form shell and dark-page headings stay bright */
-body,
-body > div,
-#formContainer,
-#offerResultContainer,
-#notPurchasingContainer,
-#finalReviewContainer,
-#finalSuccessContainer {
-  color: #FFFFFF;
-}
+/* Dark form shell and dark-page headings stay bright */body,body > div,#formContainer,#offerResultContainer,#notPurchasingContainer,#finalReviewContainer,#finalSuccessContainer {color: #FFFFFF;}
 
-#step1 > h2,
-#step1 > p,
-#step2 > h2,
-#step3 > h2,
-#step4 > h2,
-#step4 > p,
-#step5 > h2,
-#step5 > p,
-#offerResultContainer .offer-reveal-header h2,
-#offerResultContainer .offer-reveal-header p,
-#notPurchasingContainer h2,
-#finalReviewContainer > div:first-child h2,
-#finalReviewContainer > div:first-child p,
-#finalSuccessContainer > h2,
-#finalSuccessContainer > p {
-  color: #FFFFFF !important;
-}
+#step1 > h2,#step1 > p,#step2 > h2,#step3 > h2,#step4 > h2,#step4 > p,#step5 > h2,#step5 > p,#offerResultContainer .offer-reveal-header h2,#offerResultContainer .offer-reveal-header p,#notPurchasingContainer h2,#finalReviewContainer > div h2,#finalReviewContainer > div p,#finalSuccessContainer > h2,#finalSuccessContainer > p {color: #FFFFFF !important;}
 
-/* Labels on dark form sections stay white */
-#offerForm label:not(.modern-photo-card):not(.photo-upload-box),
-#step5 label {
-  color: #FFFFFF !important;
-}
+/* Labels on dark form sections stay white */#offerForm label(.modern-photo-card)(.photo-upload-box),#step5 label {color: #FFFFFF !important;}
 
-/* Consent white/pale card: dark readable text */
-#finalReviewContainer label {
-  color: #111827 !important;
-}
+/* Consent white/pale card: dark readable text */#finalReviewContainer label {color: #111827 !important;}
 
-#finalReviewContainer label span {
-  color: #111827 !important;
-}
-
+#finalReviewContainer label span {color: #111827 !important;}
 
 /* FINAL VISIBILITY ENHANCEMENTS */
 
-/* Dropdown items: white text whenever hovered, focused, selected, or active */
-.custom-select-option:hover,
-.custom-select-option:focus,
-.custom-select-option.selected,
-.custom-select-option:active {
-  background: #111827 !important;
-  color: #FFFFFF !important;
-}
+/* Dropdown items: white text whenever hovered, focused, selected, or active */.custom-select-option,.custom-select-option,.custom-select-option.selected,.custom-select-option {background: #111827 !important;color: #FFFFFF !important;}
 
-/* Native select highlighted option */
-select option:checked,
-select option:hover,
-select option:focus {
-  background: #111827 !important;
-  color: #FFFFFF !important;
-}
+/* Native select highlighted option */select option,select option,select option {background: #111827 !important;color: #FFFFFF !important;}
 
-/* Upload image page: make all wording clearly visible */
-#step4,
-#step4 h1,
-#step4 h2,
-#step4 h3,
-#step4 p,
-#step4 span,
-#step4 label {
-  color: #FFFFFF !important;
-}
+/* Upload image page: make all wording clearly visible */#step4,#step4 h1,#step4 h2,#step4 h3,#step4 p,#step4 span,#step4 label {color: #FFFFFF !important;}
 
-/* Light upload guide/card areas must use dark text */
-#step4 .photo-guide-card,
-#step4 .photo-guide-card *,
-#step4 .appraisal-note,
-#step4 .appraisal-note * {
-  color: #111827 !important;
-}
+/* Light upload guide/card areas must use dark text */#step4 .photo-guide-card,#step4 .photo-guide-card *,#step4 .appraisal-note,#step4 .appraisal-note * {color: #111827 !important;}
 
-/* Dark upload cards use bright white text */
-#step4 .modern-photo-card {
-  background: #0F172A !important;
-  border-color: #34D399 !important;
-}
+/* Dark upload cards use bright white text */#step4 .modern-photo-card {background: #0F172A !important;border-color: #34D399 !important;}
 
-#step4 .modern-photo-card *,
-#step4 .modern-photo-card span,
-#step4 .modern-photo-card p {
-  color: #FFFFFF !important;
-}
+#step4 .modern-photo-card *,#step4 .modern-photo-card span,#step4 .modern-photo-card p {color: #FFFFFF !important;}
 
-#step4 .modern-photo-card .photo-card-icon {
-  background: #FFFFFF !important;
-  color: #111827 !important;
-}
+#step4 .modern-photo-card .photo-card-icon {background: #FFFFFF !important;color: #111827 !important;}
 
-#step4 .modern-photo-card .photo-check-badge {
-  background: #22C55E !important;
-  color: #FFFFFF !important;
-  border: 3px solid #FFFFFF !important;
-  box-shadow:
-    0 0 0 4px rgba(34, 197, 94, 0.35),
-    0 0 18px rgba(34, 197, 94, 0.85) !important;
-}
+#step4 .modern-photo-card .photo-check-badge {background: #22C55E !important;color: #FFFFFF !important;border: 3px solid #FFFFFF !important;box-shadow:0 0 0 4px rgba(34, 197, 94, 0.35),0 0 18px rgba(34, 197, 94, 0.85) !important;}
 
-/* Offer-page checkmarks: extra large, bright, and unmistakable */
-.compact-benefits {
-  font-size: 0.9rem !important;
-  line-height: 2.1 !important;
-}
+/* Offer-page checkmarks: extra large, bright, and unmistakable */.compact-benefits {font-size: 0.9rem !important;line-height: 2.1 !important;}
 
-.compact-benefits span {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 1.35rem !important;
-  height: 1.35rem !important;
-  margin-right: 0.35rem !important;
-  border-radius: 9999px !important;
-  background: #22C55E !important;
-  color: #FFFFFF !important;
-  font-size: 1rem !important;
-  font-weight: 900 !important;
-  border: 2px solid #FFFFFF !important;
-  box-shadow:
-    0 0 0 3px rgba(34, 197, 94, 0.28),
-    0 0 14px rgba(34, 197, 94, 0.8) !important;
-}
+.compact-benefits span {display: inline-flex !important;align-items: center !important;justify-content: center !important;width: 1.35rem !important;height: 1.35rem !important;margin-right: 0.35rem !important;border-radius: 9999px !important;background: #22C55E !important;color: #FFFFFF !important;font-size: 1rem !important;font-weight: 900 !important;border: 2px solid #FFFFFF !important;box-shadow:0 0 0 3px rgba(34, 197, 94, 0.28),0 0 14px rgba(34, 197, 94, 0.8) !important;}
 
-/* How-it-works check circles: clearly visible */
-.compact-step-number {
-  background: #FFFFFF !important;
-  color: #111827 !important;
-  border: 3px solid #22C55E !important;
-  box-shadow:
-    0 0 0 3px rgba(34, 197, 94, 0.25),
-    0 0 12px rgba(34, 197, 94, 0.65) !important;
-}
+/* How-it-works check circles: clearly visible */.compact-step-number {background: #FFFFFF !important;color: #111827 !important;border: 3px solid #22C55E !important;box-shadow:0 0 0 3px rgba(34, 197, 94, 0.25),0 0 12px rgba(34, 197, 94, 0.65) !important;}
 
-/* Offer card text stays bright white */
-.compact-offer-card,
-.compact-offer-card *,
-.compact-how-it-works,
-.compact-how-it-works * {
-  color: #FFFFFF !important;
-}
+/* Offer card text stays bright white */.compact-offer-card,.compact-offer-card *,.compact-how-it-works,.compact-how-it-works * {color: #FFFFFF !important;}
 
-/* Preserve dark offer amount emphasis */
-.compact-offer-value {
-  color: #FFFFFF !important;
-  text-shadow: 0 2px 10px rgba(255,255,255,0.18);
-}
-
+/* Preserve dark offer amount emphasis */.compact-offer-value {color: #FFFFFF !important;text-shadow: 0 2px 10px rgba(255,255,255,0.18);}
 
 /* FINAL ICON TWEAKS */
 
-/* Main success checkmark circle darker green */
-.offer-circle{
-  fill:#BBF7D0 !important;
-  stroke:#16A34A !important;
-}
-.offer-check{
-  stroke:#16A34A !important;
-}
+/* Main success checkmark circle darker green */.offer-circle{fill:#BBF7D0 !important;stroke:#16A34A !important;}.offer-check{stroke:#16A34A !important;}
 
-/* Final reserved page success icon */
-.confirmation-icon{
-  background:#DCFCE7 !important;
-  color:#16A34A !important;
-  border:3px solid #16A34A !important;
-}
+/* Final reserved page success icon */.confirmation-icon{background:#DCFCE7 !important;color:#16A34A !important;border:3px solid #16A34A !important;}
 
-/* Replace "how it works" bullets with numbered circles */
-.compact-step-number{
-  width:1.5rem!important;
-  height:1.5rem!important;
-  background:#16A34A!important;
-  color:#fff!important;
-  border:2px solid #fff!important;
-  font-weight:900!important;
-}
+/* Replace "how it works" bullets with numbered circles */.compact-step-number{width:1.5rem!important;height:1.5rem!important;background:#16A34A!important;color:#fff!important;border:2px solid #fff!important;font-weight:900!important;}
 
+/* Larger, clearer offer-page next-steps section */.upgraded-how-it-works {padding-top: 0.25rem;}
 
-/* Larger, clearer offer-page next-steps section */
-.upgraded-how-it-works {
-  padding-top: 0.25rem;
-}
+.upgraded-how-it-works h3 {color: #FFFFFF !important;font-size: 1.22rem !important;line-height: 1.25 !important;font-weight: 900 !important;border-bottom: 1px solid rgba(255,255,255,0.28) !important;padding-bottom: 0.75rem !important;margin-bottom: 1rem !important;letter-spacing: -0.01em;}
 
-.upgraded-how-it-works h3 {
-  color: #FFFFFF !important;
-  font-size: 1.22rem !important;
-  line-height: 1.25 !important;
-  font-weight: 900 !important;
-  border-bottom: 1px solid rgba(255,255,255,0.28) !important;
-  padding-bottom: 0.75rem !important;
-  margin-bottom: 1rem !important;
-  letter-spacing: -0.01em;
-}
+.upgraded-step-row {display: flex;align-items: flex-start;gap: 0.85rem;margin-bottom: 1.05rem;}
 
-.upgraded-step-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-  margin-bottom: 1.05rem;
-}
+.upgraded-step-number {width: 2rem;height: 2rem;flex: 0 0 2rem;display: inline-flex;align-items: center;justify-content: center;border-radius: 9999px;background: #16A34A;color: #FFFFFF !important;border: 2px solid #FFFFFF;font-size: 0.95rem;line-height: 1;font-weight: 900;box-shadow:0 0 0 3px rgba(22,163,74,0.22),0 0 12px rgba(22,163,74,0.55);}
 
-.upgraded-step-number {
-  width: 2rem;
-  height: 2rem;
-  flex: 0 0 2rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  background: #16A34A;
-  color: #FFFFFF !important;
-  border: 2px solid #FFFFFF;
-  font-size: 0.95rem;
-  line-height: 1;
-  font-weight: 900;
-  box-shadow:
-    0 0 0 3px rgba(22,163,74,0.22),
-    0 0 12px rgba(22,163,74,0.55);
-}
+.upgraded-step-copy {min-width: 0;padding-top: 0.05rem;}
 
-.upgraded-step-copy {
-  min-width: 0;
-  padding-top: 0.05rem;
-}
+.upgraded-step-title {color: #FFFFFF !important;font-size: 1rem;line-height: 1.3;font-weight: 900;margin-bottom: 0.22rem;}
 
-.upgraded-step-title {
-  color: #FFFFFF !important;
-  font-size: 1rem;
-  line-height: 1.3;
-  font-weight: 900;
-  margin-bottom: 0.22rem;
-}
+.upgraded-step-description {color: #E5E7EB !important;font-size: 0.86rem;line-height: 1.48;font-weight: 600;}
 
-.upgraded-step-description {
-  color: #E5E7EB !important;
-  font-size: 0.86rem;
-  line-height: 1.48;
-  font-weight: 600;
-}
+@media (max-width: 380px) {.upgraded-how-it-works h3 {font-size: 1.1rem !important;}
 
-@media (max-width: 380px) {
-  .upgraded-how-it-works h3 {
-    font-size: 1.1rem !important;
-  }
+.upgraded-step-title {font-size: 0.94rem;}
 
-  .upgraded-step-title {
-    font-size: 0.94rem;
-  }
+.upgraded-step-description {font-size: 0.81rem;}}
 
-  .upgraded-step-description {
-    font-size: 0.81rem;
-  }
-}
+/* Animated pulsing pickup availability dot */.compact-pickup-message::before {content: "";width: 0.9rem;height: 0.9rem;flex: 0 0 0.9rem;border-radius: 9999px;background: #22C55E;box-shadow: 0 0 0 0 rgba(34,197,94,.9);animation: pickupPulseFast 1.15s ease-in-out infinite;}
 
+@keyframes pickupPulseFast {0% {transform: scale(1);box-shadow: 0 0 0 0 rgba(34,197,94,.9);}50% {transform: scale(1.55);box-shadow: 0 0 0 14px rgba(34,197,94,0);}100% {transform: scale(1);box-shadow: 0 0 0 0 rgba(34,197,94,0);}}
 
-/* Animated pulsing pickup availability dot */
-.compact-pickup-message::before {
-  content: "";
-  width: 0.9rem;
-  height: 0.9rem;
-  flex: 0 0 0.9rem;
-  border-radius: 9999px;
-  background: #22C55E;
-  box-shadow: 0 0 0 0 rgba(34,197,94,.9);
-  animation: pickupPulseFast 1.15s ease-in-out infinite;
-}
+@media (prefers-reduced-motion: reduce) {.compact-pickup-message::before {animation: none;}}
 
-@keyframes pickupPulseFast {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(34,197,94,.9);
-  }
-  50% {
-    transform: scale(1.55);
-    box-shadow: 0 0 0 14px rgba(34,197,94,0);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(34,197,94,0);
-  }
-}
+/* Offer-page privacy and security note */.offer-security-note {max-width: 24rem;margin: 1rem auto 0;padding: 0.9rem 0.75rem 0;border-top: 1px solid rgba(255, 255, 255, 0.18);color: #D1D5DB !important;text-align: center;font-size: 0.78rem;line-height: 1.45;font-weight: 700;}
 
-@media (prefers-reduced-motion: reduce) {
-  .compact-pickup-message::before {
-    animation: none;
-  }
-}
+.offer-security-note .security-lock {display: inline-block;margin-right: 0.25rem;}
 
+@media (max-width: 380px) {.offer-security-note {font-size: 0.73rem;}}
 
-/* Offer-page privacy and security note */
-.offer-security-note {
-  max-width: 24rem;
-  margin: 1rem auto 0;
-  padding: 0.9rem 0.75rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  color: #D1D5DB !important;
-  text-align: center;
-  font-size: 0.78rem;
-  line-height: 1.45;
-  font-weight: 700;
-}
-
-.offer-security-note .security-lock {
-  display: inline-block;
-  margin-right: 0.25rem;
-}
-
-@media (max-width: 380px) {
-  .offer-security-note {
-    font-size: 0.73rem;
-  }
-}
-
-
-/* Consistent privacy trust messages */
-.trust-message {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 0.45rem;
-  max-width: 30rem;
-  margin: 1rem auto 0;
-  padding: 0.8rem 0.75rem 0;
-  border-top: 1px solid rgba(255,255,255,0.16);
-  color: #D1D5DB !important;
-  text-align: center;
-  font-size: 0.78rem;
-  line-height: 1.45;
-  font-weight: 700;
-}
-.trust-message .trust-icon {
-  flex: 0 0 auto;
-  line-height: 1.35;
-}
-.trust-message span:last-child {
-  color: #D1D5DB !important;
-}
-@media (max-width: 380px) {
-  .trust-message { font-size: 0.73rem; }
-}
+/* Consistent privacy trust messages */.trust-message {display: flex;align-items: flex-start;justify-content: center;gap: 0.45rem;max-width: 30rem;margin: 1rem auto 0;padding: 0.8rem 0.75rem 0;border-top: 1px solid rgba(255,255,255,0.16);color: #D1D5DB !important;text-align: center;font-size: 0.78rem;line-height: 1.45;font-weight: 700;}.trust-message .trust-icon {flex: 0 0 auto;line-height: 1.35;}.trust-message span {color: #D1D5DB !important;}@media (max-width: 380px) {.trust-message { font-size: 0.73rem; }}
 
 
 
-/* Surgical UI sizing updates */
-#step3 h2,
-#step3 .question-title,
-#step3 .guided-question > label,
-#step3 .guided-question > p,
-#conditionQuestions h2,
-#conditionQuestions .question-title,
-#conditionQuestions .guided-question > label,
-#conditionQuestions .guided-question > p,
-#conditionContainer h2,
-#conditionContainer .question-title,
-#conditionContainer .guided-question > label,
-#conditionContainer .guided-question > p{
-  font-size:1.45rem !important;
-  line-height:1.35 !important;
-  font-weight:800 !important;
-}
+/* Surgical UI sizing updates */#step3 h2,#step3 .question-title,#step3 .guided-question > label,#step3 .guided-question > p,#conditionQuestions h2,#conditionQuestions .question-title,#conditionQuestions .guided-question > label,#conditionQuestions .guided-question > p,#conditionContainer h2,#conditionContainer .question-title,#conditionContainer .guided-question > label,#conditionContainer .guided-question > p{font-size:1.45rem !important;line-height:1.35 !important;font-weight:800 !important;}
 
-#conditionBackBtn,
-#prevBtn{
-  font-size:1.1rem !important;
-  padding:0.9rem 1.4rem !important;
-  min-height:56px !important;
-}
+#conditionBackBtn,#prevBtn{font-size:1.1rem !important;padding:0.9rem 1.4rem !important;min-height:56px !important;}
 
 
 
-/* Smaller loading circle and words only before the offer page */
-#loadingOverlay.offer-loading-large .spinner {
-  width: 52px !important;
-  height: 52px !important;
-  border-width: 5px !important;
-}
+/* Smaller loading circle and words only before the offer page */#loadingOverlay.offer-loading-large .spinner {width: 52px !important;height: 52px !important;border-width: 5px !important;}
 
-#loadingOverlay.offer-loading-large #loadingText {
-  font-size: 19px !important;
-  line-height: 1.35 !important;
-  font-weight: 700 !important;
-}
+#loadingOverlay.offer-loading-large #loadingText {font-size: 19px !important;line-height: 1.35 !important;font-weight: 700 !important;}
 
-/* Loader shown after accepting the cash offer */
-#acceptOfferLoadingOverlay .spinner {
-  width: 52px !important;
-  height: 52px !important;
-  border-width: 5px !important;
-}
+/* Loader shown after accepting the cash offer */#acceptOfferLoadingOverlay .spinner {width: 52px !important;height: 52px !important;border-width: 5px !important;}
 
-#acceptOfferLoadingOverlay p {
-  font-size: 19px !important;
-  line-height: 1.35 !important;
-  font-weight: 700 !important;
-}
-/* Keep the Zip Code placeholder fully visible */
-#step5 #zip {
-  padding-right: 10px !important;
-  font-size: 18px !important;
-}
-@media (max-width: 390px) {
-  #step5 #zip {
-    padding-left: 48px !important;
-    padding-right: 6px !important;
-    font-size: 15px !important;
-  }
-}
+#acceptOfferLoadingOverlay p {font-size: 19px !important;line-height: 1.35 !important;font-weight: 700 !important;}/* Keep the Zip Code placeholder fully visible */#step5 #zip {padding-right: 10px !important;font-size: 18px !important;}@media (max-width: 390px) {#step5 #zip {padding-left: 48px !important;padding-right: 6px !important;font-size: 15px !important;}}
 
+/* Green slow-moving arrow between the offer headline and time promise */.cash-offer-headline .offer-arrow {display: block !important;width: 100% !important;margin: 7px auto 9px !important;color: #22C55E !important;-webkit-text-fill-color: #22C55E !important;font-size: 58px !important;line-height: 0.8 !important;font-weight: 900 !important;text-align: center !important;opacity: 1 !important;visibility: visible !important;text-shadow:0 0 8px rgba(34, 197, 94, 0.55),0 0 18px rgba(34, 197, 94, 0.30) !important;animation: cashOfferArrowFloat 4s ease-in-out infinite !important;}
 
-/* Green slow-moving arrow between the offer headline and time promise */
-.cash-offer-headline .offer-arrow {
-  display: block !important;
-  width: 100% !important;
-  margin: 7px auto 9px !important;
-  color: #22C55E !important;
-  -webkit-text-fill-color: #22C55E !important;
-  font-size: 58px !important;
-  line-height: 0.8 !important;
-  font-weight: 900 !important;
-  text-align: center !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  text-shadow:
-    0 0 8px rgba(34, 197, 94, 0.55),
-    0 0 18px rgba(34, 197, 94, 0.30) !important;
-  animation: cashOfferArrowFloat 4s ease-in-out infinite !important;
-}
+@keyframes cashOfferArrowFloat {0%, 100% {transform: translateY(0);}50% {transform: translateY(7px);}}
 
-@keyframes cashOfferArrowFloat {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(7px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cash-offer-headline .offer-arrow {
-    animation: none !important;
-  }
-}
+@media (prefers-reduced-motion: reduce) {.cash-offer-headline .offer-arrow {animation: none !important;}}
 
 </style>
 
@@ -1505,7 +844,6 @@ select option:focus {
     cursor: pointer;
   }
 </style>
-
 
 <style>
 body:has(#step5.active) {
@@ -1654,7 +992,6 @@ body:has(#step5.active) #navFooter #nextBtn::before{
 }
 </style>
 
-
 <style>
 /* FINAL PICKUP TIME FIELD ADJUSTMENTS */
 #step5 .exact-time-wrap select {
@@ -1705,7 +1042,6 @@ body:has(#step5.active) #navFooter #nextBtn::before{
   }
 }
 </style>
-
 
 <style>
 /* FINAL: MATCH PICKUP DATE AND PICKUP TIME COLUMNS */
@@ -1940,7 +1276,6 @@ body:has(#step5.active) #navFooter #nextBtn::before{
 }
 </style>
 
-
 <style>
 /* MOBILE CONFIRMATION BUTTON FIX */
 #finalReviewContainer {
@@ -1984,7 +1319,6 @@ body:has(#step5.active) #navFooter #nextBtn::before{
   }
 }
 </style>
-
 
 <style>
 /* FINAL MOBILE CONFIRMATION TAP FIX */
@@ -2030,7 +1364,6 @@ body:has(#finalReviewContainer:not(.hidden)) #navFooter {
   }
 }
 </style>
-
 
 <style>
 /* TRUE FULL-SCREEN MOBILE LAYOUT — Instagram, Safari, and Chrome */
@@ -2326,7 +1659,6 @@ body:has(#step1.active) > div:first-of-type {
 }
 </style>
 
-
 <style>
 /* First-page CTA placement only */
 #step1 .first-page-cta-row,
@@ -2354,7 +1686,6 @@ body:has(#step1.active) > div:first-of-type {
   }
 }
 </style>
-
 
 <style>
 /* Stretch first page on mobile only */
@@ -2396,7 +1727,6 @@ body:has(#step1.active) > div:first-of-type {
 }
 </style>
 
-
 <style>
 @media (max-width:768px){
   /* Stretch first page further */
@@ -2421,7 +1751,6 @@ body:has(#step1.active) > div:first-of-type {
   }
 }
 </style>
-
 
 <style>
 @media (max-width:768px){
@@ -2471,7 +1800,6 @@ body:has(#step1.active) > div:first-of-type {
   }
 }
 </style>
-
 
 <style>
 #step1 .cash-offer-white{
@@ -2616,38 +1944,39 @@ margin-top:.2rem;
 <body class="bg-black font-sans min-h-screen flex items-center justify-center p-4">
 
   <div class="bg-gradient-to-br from-gray-900 via-blue-900 to-black text-white rounded-xl shadow-2xl border border-blue-500/40 max-w-xl w-full p-6 md:p-8">
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="hidden text-center py-12">
+  <div class="spinner mb-4"></div>
+  <p id="loadingText" class="text-white font-semibold min-h-6">✓ Checking market demand...</p>
+</div>
+
+<div id="acceptOfferLoadingOverlay" class="hidden text-center py-12">
+  <div class="spinner mb-4"></div>
+  <p class="text-white font-semibold min-h-6">Finalizing your secure pickup details...</p>
+</div>
+
+<!-- Questionnaire View Container -->
+<div id="formContainer">
+  <!-- Progress Indicator -->
+  <div id="progressBlock" class="mb-6">
+    <div class="flex justify-between text-xs font-semibold text-white uppercase tracking-wider mb-2">
+      <span id="stepLabel">Step 1 of 3: Vehicle Specs</span>
+      
+    </div>
+    <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+      <div id="progressBar" class="bg-green-500 h-full transition-all duration-300" style="width: 12.5%;"></div>
+    </div>
+  </div>
+
+  <!-- Questionnaire Form -->
+  <form id="offerForm" onsubmit="event.preventDefault();">
     
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="hidden text-center py-12">
-      <div class="spinner mb-4"></div>
-      <p id="loadingText" class="text-white font-semibold min-h-6">✓ Checking market demand...</p>
-    </div>
+    <!-- STEP 1: Vehicle Basics -->
+    <div class="step active" id="step1">
+      <h2 class="text-xl font-bold text-white mb-1 cash-offer-headline"><span class="cash-offer-white">Get Your Cash Offer</span><span class="offer-arrow" aria-hidden="true">&#8595;</span><span class="cash-offer-green">Within 30 Seconds</span></h2>
+      <p class="text-sm text-white mb-2">Instant offers powered by current local buyer demand.</p>
 
-    <div id="acceptOfferLoadingOverlay" class="hidden text-center py-12">
-      <div class="spinner mb-4"></div>
-      <p class="text-white font-semibold min-h-6">Finalizing your secure pickup details...</p>
-    </div>
-
-    <!-- Questionnaire View Container -->
-    <div id="formContainer">
-      <!-- Progress Indicator -->
-      <div id="progressBlock" class="mb-6">
-        <div class="flex justify-between text-xs font-semibold text-white uppercase tracking-wider mb-2">
-          <span id="stepLabel">Step 1 of 3: Vehicle Specs</span>
-          
-        </div>
-        <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
-          <div id="progressBar" class="bg-green-500 h-full transition-all duration-300" style="width: 12.5%;"></div>
-        </div>
-      </div>
-
-      <!-- Questionnaire Form -->
-      <form id="offerForm" onsubmit="event.preventDefault();">
-        
-        <!-- STEP 1: Vehicle Basics -->
-        <div class="step active" id="step1">
-          <h2 class="text-xl font-bold text-white mb-1 cash-offer-headline"><span class="cash-offer-white">Get Your Cash Offer</span><span class="offer-arrow" aria-hidden="true">&#8595;</span><span class="cash-offer-green">Within 30 Seconds</span></h2>
-          <p class="text-sm text-white mb-2">Instant offers powered by current local buyer demand.</p>
 <div class="space-y-4">
             <div>
               <label class="block text-sm font-semibold text-white mb-1">Year</label>
@@ -2675,8 +2004,9 @@ margin-top:.2rem;
             </div>
           </div>
 
-          <div class="mt-8 flex justify-center">
-            <div class="first-page-cta-row" id="firstPageCtaRow">
+      <div class="mt-8 flex justify-center">
+        <div class="first-page-cta-row" id="firstPageCtaRow">
+
 <button type="button" onclick="changeStep(1)" class="w-full max-w-sm bg-green-500 text-white py-4 px-6 rounded-xl font-black text-lg shadow-md hover:bg-green-600 transition tracking-wide">
               Get An Instant Offer &rarr;
             </button>
@@ -2684,384 +2014,384 @@ margin-top:.2rem;
           </div>
         </div>
 
-        <!-- STEP 2: Location & Documentation -->
-        <div class="step" id="step2">
-          <h2 class="text-xl font-bold text-white mb-4">Title & Registration Status</h2>
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-semibold text-white mb-1">What type of title does it have?</label>
-              <select name="titleType" id="titleType" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
-                <option value="" selected disabled>Select Title Type</option>
-                <option value="Clean">Clean Title</option>
-                <option value="Salvage">Salvage Title</option>
-                <option value="Rebuilt">Rebuilt Title</option>
-                <option value="No Title">No Title / Missing</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-white mb-1">Is the registration current?</label>
-              <select name="registration" id="registration" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
-                <option value="" selected disabled>Select Registration Status</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No / Expired</option>
-              </select>
-            </div>
-          </div>
+    <!-- STEP 2: Location & Documentation -->
+    <div class="step" id="step2">
+      <h2 class="text-xl font-bold text-white mb-4">Title & Registration Status</h2>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-white mb-1">What type of title does it have?</label>
+          <select name="titleType" id="titleType" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
+            <option value="" selected disabled>Select Title Type</option>
+            <option value="Clean">Clean Title</option>
+            <option value="Salvage">Salvage Title</option>
+            <option value="Rebuilt">Rebuilt Title</option>
+            <option value="No Title">No Title / Missing</option>
+          </select>
         </div>
-
-        <!-- STEP 3: Vehicle Condition -->
-        <div class="step" id="step3">
-          <h2 class="text-xl font-bold text-white mb-6">Vehicle Condition</h2>
-
-          <div id="conditionQuestion1" class="condition-question active">
-            <label class="block text-sm font-semibold text-white mb-2">Does the vehicle start and drive?</label>
-            <select name="starts" id="starts" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
-              <option value="" selected disabled>Select Vehicle Condition</option>
-              <option value="Drives">Starts and Drives</option>
-              <option value="Starts">Starts but doesn't drive</option>
-              <option value="No">Doesn't start</option>
-            </select>
-          </div>
-
-          <div id="conditionQuestion2" class="condition-question">
-            <label class="block text-sm font-semibold text-white mb-2">Approximate Mileage</label>
-            <select name="mileage" id="mileage" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
-              <option value="" selected disabled>Select Mileage</option>
-              <option value="25000">25k</option>
-              <option value="50000">50k</option>
-              <option value="100000">100k</option>
-              <option value="125000">125k</option>
-              <option value="150000">150k</option>
-              <option value="175000">175k</option>
-              <option value="200000">200k</option>
-              <option value="225000">225k</option>
-              <option value="250000">250k</option>
-              <option value="275000">275k</option>
-              <option value="300000">300k</option>
-              <option value="350000">350k+</option>
-            </select>
-          </div>
-
-          <div id="conditionQuestion3" class="condition-question">
-            <label class="block text-sm font-semibold text-white mb-2">Is there any major exterior body damage (dents/wreck)?</label>
-            <select name="damage" id="damage" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
-              <option value="" selected disabled>Select Damage Level</option>
-              <option value="None">No major damage</option>
-              <option value="Minor">Minor dents/scratches</option>
-              <option value="Severe">Severe damage</option>
-            </select>
-          </div>
-
-          <div id="conditionQuestion4" class="condition-question">
-            <label class="block text-sm font-semibold text-white mb-2">Are any doors, bumpers, or body panels missing/loose?</label>
-            <select name="panels" id="panels" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
-              <option value="" selected disabled>Select Panel Condition</option>
-              <option value="Intact">All panels intact</option>
-              <option value="Missing">Some panels missing or loose</option>
-            </select>
-          </div>
-
-          <div id="conditionQuestion5" class="condition-question">
-            <label class="block text-sm font-semibold text-white mb-2">Are any mirrors, glass, or lights broken?</label>
-            <select name="glass" id="glass" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
-              <option value="" selected disabled>Select Glass/Light Condition</option>
-              <option value="No">No</option>
-              <option value="Yes">Yes, some broken</option>
-            </select>
-          </div>
-
-          <div id="conditionQuestion6" class="condition-question">
-            <label class="block text-sm font-semibold text-white mb-2">Interior condition (Torn seats, missing dash items)?</label>
-            <select name="interior" id="interior" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
-              <option value="" selected disabled>Select Interior Condition</option>
-              <option value="Good">Good / Clean</option>
-              <option value="Worn">Worn / Torn</option>
-              <option value="Severe">Severe damage / Stripped</option>
-            </select>
-          </div>
-
-          <div id="conditionQuestionNav" class="mt-8 flex justify-between border-t pt-4">
-            <button type="button" id="conditionBackBtn" onclick="changeConditionQuestion(-1)" class="bg-gray-200 text-white px-4 py-2 rounded-lg font-medium hover:bg-black transition">
-              Back to Title & Registration
-            </button>
-            <button type="button" id="conditionNextBtn" onclick="changeConditionQuestion(1)" style="display:none" class="bg-green-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-green-600 transition">
-              Next
-            </button>
-          </div>
+        <div>
+          <label class="block text-sm font-semibold text-white mb-1">Is the registration current?</label>
+          <select name="registration" id="registration" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
+            <option value="" selected disabled>Select Registration Status</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No / Expired</option>
+          </select>
         </div>
+      </div>
+    </div>
 
-        <!-- STEP 5: Pickup Logistics & Contact -->
-        <div class="step" id="step5">
-          <section class="exact-pickup-page">
-            <header class="exact-pickup-header">
-              <div class="exact-calendar-badge" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor">
-                  <rect x="13" y="17" width="31" height="30" rx="5"></rect>
-                  <path d="M20 11v12M37 11v12M13 27h31"></path>
-                  <circle cx="46" cy="44" r="12"></circle>
-                  <path d="M46 37v8l5 3"></path>
-                </svg>
+    <!-- STEP 3: Vehicle Condition -->
+    <div class="step" id="step3">
+      <h2 class="text-xl font-bold text-white mb-6">Vehicle Condition</h2>
+
+      <div id="conditionQuestion1" class="condition-question active">
+        <label class="block text-sm font-semibold text-white mb-2">Does the vehicle start and drive?</label>
+        <select name="starts" id="starts" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
+          <option value="" selected disabled>Select Vehicle Condition</option>
+          <option value="Drives">Starts and Drives</option>
+          <option value="Starts">Starts but doesn't drive</option>
+          <option value="No">Doesn't start</option>
+        </select>
+      </div>
+
+      <div id="conditionQuestion2" class="condition-question">
+        <label class="block text-sm font-semibold text-white mb-2">Approximate Mileage</label>
+        <select name="mileage" id="mileage" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
+          <option value="" selected disabled>Select Mileage</option>
+          <option value="25000">25k</option>
+          <option value="50000">50k</option>
+          <option value="100000">100k</option>
+          <option value="125000">125k</option>
+          <option value="150000">150k</option>
+          <option value="175000">175k</option>
+          <option value="200000">200k</option>
+          <option value="225000">225k</option>
+          <option value="250000">250k</option>
+          <option value="275000">275k</option>
+          <option value="300000">300k</option>
+          <option value="350000">350k+</option>
+        </select>
+      </div>
+
+      <div id="conditionQuestion3" class="condition-question">
+        <label class="block text-sm font-semibold text-white mb-2">Is there any major exterior body damage (dents/wreck)?</label>
+        <select name="damage" id="damage" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
+          <option value="" selected disabled>Select Damage Level</option>
+          <option value="None">No major damage</option>
+          <option value="Minor">Minor dents/scratches</option>
+          <option value="Severe">Severe damage</option>
+        </select>
+      </div>
+
+      <div id="conditionQuestion4" class="condition-question">
+        <label class="block text-sm font-semibold text-white mb-2">Are any doors, bumpers, or body panels missing/loose?</label>
+        <select name="panels" id="panels" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
+          <option value="" selected disabled>Select Panel Condition</option>
+          <option value="Intact">All panels intact</option>
+          <option value="Missing">Some panels missing or loose</option>
+        </select>
+      </div>
+
+      <div id="conditionQuestion5" class="condition-question">
+        <label class="block text-sm font-semibold text-white mb-2">Are any mirrors, glass, or lights broken?</label>
+        <select name="glass" id="glass" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
+          <option value="" selected disabled>Select Glass/Light Condition</option>
+          <option value="No">No</option>
+          <option value="Yes">Yes, some broken</option>
+        </select>
+      </div>
+
+      <div id="conditionQuestion6" class="condition-question">
+        <label class="block text-sm font-semibold text-white mb-2">Interior condition (Torn seats, missing dash items)?</label>
+        <select name="interior" id="interior" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-500 outline-none">
+          <option value="" selected disabled>Select Interior Condition</option>
+          <option value="Good">Good / Clean</option>
+          <option value="Worn">Worn / Torn</option>
+          <option value="Severe">Severe damage / Stripped</option>
+        </select>
+      </div>
+
+      <div id="conditionQuestionNav" class="mt-8 flex justify-between border-t pt-4">
+        <button type="button" id="conditionBackBtn" onclick="changeConditionQuestion(-1)" class="bg-gray-200 text-white px-4 py-2 rounded-lg font-medium hover:bg-black transition">
+          Back to Title & Registration
+        </button>
+        <button type="button" id="conditionNextBtn" onclick="changeConditionQuestion(1)" style="display:none" class="bg-green-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-green-600 transition">
+          Next
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Pickup Logistics & Contact -->
+    <div class="step" id="step5">
+      <section class="exact-pickup-page">
+        <header class="exact-pickup-header">
+          <div class="exact-calendar-badge" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor">
+              <rect x="13" y="17" width="31" height="30" rx="5"></rect>
+              <path d="M20 11v12M37 11v12M13 27h31"></path>
+              <circle cx="46" cy="44" r="12"></circle>
+              <path d="M46 37v8l5 3"></path>
+            </svg>
+          </div>
+
+          <h2>Schedule Your<br>Payout &amp; Pickup</h2>
+          <p id="sameDayPromoMessage">Choose a time that works best for you.</p>
+        </header>
+
+        <div class="exact-pickup-form">
+          <div class="exact-field-group">
+            <label for="fullName">Full Name</label>
+            <div class="exact-input-wrap exact-highlight">
+              <span class="exact-input-icon" aria-hidden="true">👤</span>
+              <input type="text" name="fullName" id="fullName"
+                     placeholder="Enter your full name" required autocomplete="name">
+            </div>
+          </div>
+
+          <div class="exact-field-group">
+            <label for="phone">Phone Number</label>
+            <div class="exact-input-wrap exact-highlight">
+              <span class="exact-input-icon" aria-hidden="true">☎</span>
+              <input type="tel" name="phone" id="phone"
+                     placeholder="(619) 555-0199" inputmode="tel" maxlength="14"
+                     autocomplete="tel" required pattern="\(\d{3}\) \d{3}-\d{4}">
+            </div>
+          </div>
+
+          <div class="exact-field-group">
+            <label for="street">Pickup Address</label>
+            <div class="exact-input-wrap exact-highlight">
+              <span class="exact-input-icon" aria-hidden="true">📍</span>
+              <input type="text" name="street" id="street"
+                     placeholder="Street address" required autocomplete="street-address">
+            </div>
+
+            <div class="exact-two-column exact-address-row">
+              <div class="exact-input-wrap">
+                <span class="exact-input-icon" aria-hidden="true">▦</span>
+                <input type="text" name="city" id="city"
+                       placeholder="City" required autocomplete="address-level2">
               </div>
 
-              <h2>Schedule Your<br>Payout &amp; Pickup</h2>
-              <p id="sameDayPromoMessage">Choose a time that works best for you.</p>
-            </header>
-
-            <div class="exact-pickup-form">
-              <div class="exact-field-group">
-                <label for="fullName">Full Name</label>
-                <div class="exact-input-wrap exact-highlight">
-                  <span class="exact-input-icon" aria-hidden="true">👤</span>
-                  <input type="text" name="fullName" id="fullName"
-                         placeholder="Enter your full name" required autocomplete="name">
-                </div>
+              <div class="exact-input-wrap">
+                <span class="exact-input-icon" aria-hidden="true">▥</span>
+                <input type="text" name="zip" id="zip"
+                       placeholder="Zip Code" required inputmode="numeric"
+                       pattern="[0-9]{5}" maxlength="5" autocomplete="postal-code">
               </div>
+            </div>
+          </div>
 
-              <div class="exact-field-group">
-                <label for="phone">Phone Number</label>
-                <div class="exact-input-wrap exact-highlight">
-                  <span class="exact-input-icon" aria-hidden="true">☎</span>
-                  <input type="tel" name="phone" id="phone"
-                         placeholder="(619) 555-0199" inputmode="tel" maxlength="14"
-                         autocomplete="tel" required pattern="\(\d{3}\) \d{3}-\d{4}">
-                </div>
-              </div>
-
-              <div class="exact-field-group">
-                <label for="street">Pickup Address</label>
-                <div class="exact-input-wrap exact-highlight">
-                  <span class="exact-input-icon" aria-hidden="true">📍</span>
-                  <input type="text" name="street" id="street"
-                         placeholder="Street address" required autocomplete="street-address">
-                </div>
-
-                <div class="exact-two-column exact-address-row">
-                  <div class="exact-input-wrap">
-                    <span class="exact-input-icon" aria-hidden="true">▦</span>
-                    <input type="text" name="city" id="city"
-                           placeholder="City" required autocomplete="address-level2">
+          <div class="exact-two-column exact-date-row">
+            <div class="exact-field-group">
+              <label for="pickupDate">Pickup Date</label>
+              <div class="exact-input-wrap exact-date-wrap">
+                <span class="exact-input-icon" aria-hidden="true">▣</span>
+                <input type="date" name="pickupDate" id="pickupDate"
+                       required aria-label="Select pickup date">
+                <div id="mobileCalendarBackdrop" class="mobile-calendar-backdrop" aria-hidden="true"></div>
+                <div id="mobilePickupCalendar" class="mobile-pickup-calendar" role="dialog" aria-modal="true" aria-label="Choose pickup date">
+                  <div class="mobile-calendar-header">
+                    <button type="button" id="mobileCalendarPrev" class="mobile-calendar-nav" aria-label="Previous month">‹</button>
+                    <div id="mobileCalendarMonth" class="mobile-calendar-month"></div>
+                    <button type="button" id="mobileCalendarNext" class="mobile-calendar-nav" aria-label="Next month">›</button>
                   </div>
-
-                  <div class="exact-input-wrap">
-                    <span class="exact-input-icon" aria-hidden="true">▥</span>
-                    <input type="text" name="zip" id="zip"
-                           placeholder="Zip Code" required inputmode="numeric"
-                           pattern="[0-9]{5}" maxlength="5" autocomplete="postal-code">
+                  <div class="mobile-calendar-weekdays" aria-hidden="true">
+                    <div class="mobile-calendar-weekday">Sun</div><div class="mobile-calendar-weekday">Mon</div><div class="mobile-calendar-weekday">Tue</div><div class="mobile-calendar-weekday">Wed</div><div class="mobile-calendar-weekday">Thu</div><div class="mobile-calendar-weekday">Fri</div><div class="mobile-calendar-weekday">Sat</div>
                   </div>
-                </div>
-              </div>
-
-              <div class="exact-two-column exact-date-row">
-                <div class="exact-field-group">
-                  <label for="pickupDate">Pickup Date</label>
-                  <div class="exact-input-wrap exact-date-wrap">
-                    <span class="exact-input-icon" aria-hidden="true">▣</span>
-                    <input type="date" name="pickupDate" id="pickupDate"
-                           required aria-label="Select pickup date">
-                    <div id="mobileCalendarBackdrop" class="mobile-calendar-backdrop" aria-hidden="true"></div>
-                    <div id="mobilePickupCalendar" class="mobile-pickup-calendar" role="dialog" aria-modal="true" aria-label="Choose pickup date">
-                      <div class="mobile-calendar-header">
-                        <button type="button" id="mobileCalendarPrev" class="mobile-calendar-nav" aria-label="Previous month">‹</button>
-                        <div id="mobileCalendarMonth" class="mobile-calendar-month"></div>
-                        <button type="button" id="mobileCalendarNext" class="mobile-calendar-nav" aria-label="Next month">›</button>
-                      </div>
-                      <div class="mobile-calendar-weekdays" aria-hidden="true">
-                        <div class="mobile-calendar-weekday">Sun</div><div class="mobile-calendar-weekday">Mon</div><div class="mobile-calendar-weekday">Tue</div><div class="mobile-calendar-weekday">Wed</div><div class="mobile-calendar-weekday">Thu</div><div class="mobile-calendar-weekday">Fri</div><div class="mobile-calendar-weekday">Sat</div>
-                      </div>
-                      <div id="mobileCalendarGrid" class="mobile-calendar-grid"></div>
-                      <div class="mobile-calendar-footer">
-                        <button type="button" id="mobileCalendarClear" class="mobile-calendar-clear">Clear</button>
-                      </div>
-                    </div>
-
+                  <div id="mobileCalendarGrid" class="mobile-calendar-grid"></div>
+                  <div class="mobile-calendar-footer">
+                    <button type="button" id="mobileCalendarClear" class="mobile-calendar-clear">Clear</button>
                   </div>
                 </div>
 
-                <div class="exact-field-group">
-                  <label for="pickupTimeButton">Pickup Time</label>
-                  <div class="exact-input-wrap exact-time-wrap pickup-time-up-wrapper">
-                    <input type="hidden" name="pickupTime" id="pickupTime" value="">
-
-                    <button type="button"
-                            id="pickupTimeButton"
-                            class="pickup-time-up-button"
-                            aria-haspopup="listbox"
-                            aria-expanded="false">
-                      <span id="pickupTimeButtonText">Select Time</span>
-                    </button>
-
-                    <div id="pickupTimeMenu"
-                         class="pickup-time-up-menu"
-                         role="listbox"
-                         aria-label="Pickup Time">
-                      <button type="button" class="pickup-time-up-option" data-value="Morning (8AM - 12PM)">
-                        Morning (8AM - 12PM)
-                      </button>
-                      <button type="button" class="pickup-time-up-option" data-value="Afternoon (12PM - 4PM)">
-                        Afternoon (12PM - 4PM)
-                      </button>
-                      <button type="button" class="pickup-time-up-option" data-value="Evening (4PM - 7PM)">
-                        Evening (4PM - 7PM)
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
-          </section>
-        </div>
+            <div class="exact-field-group">
+              <label for="pickupTimeButton">Pickup Time</label>
+              <div class="exact-input-wrap exact-time-wrap pickup-time-up-wrapper">
+                <input type="hidden" name="pickupTime" id="pickupTime" value="">
 
+                <button type="button"
+                        id="pickupTimeButton"
+                        class="pickup-time-up-button"
+                        aria-haspopup="listbox"
+                        aria-expanded="false">
+                  <span id="pickupTimeButtonText">Select Time</span>
+                </button>
 
-        <!-- Navigation Footer Buttons -->
-        <div class="hidden mt-8 flex justify-between border-t pt-4" id="navFooter">
-          <button type="button" id="prevBtn" onclick="changeStep(-1)" class="invisible bg-gray-200 text-white px-4 py-2 rounded-lg font-medium hover:bg-black transition">Back</button>
-          <button type="button" id="nextBtn" onclick="changeStep(1)" class="bg-green-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-green-600 transition">Next</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- STAGE 1 OFFER SCREEN -->
-    <div id="offerResultContainer" class="hidden text-center py-4">
-      <div class="offer-reveal-header">
-        <div class="offer-success-icon inline-flex items-center justify-center w-16 h-16 text-green-300 rounded-full mb-3">
-          <div id="offerConfettiLayer" class="offer-confetti-layer" aria-hidden="true"></div>
-          <svg viewBox="0 0 64 64" aria-hidden="true">
-            <circle class="offer-circle" cx="32" cy="32" r="28"></circle>
-            <path class="offer-check" d="M19 33.5l8.5 8.5L46 23.5"></path>
-          </svg>
-        </div>
-        <h2 class="text-2xl font-black text-white tracking-tight leading-tight px-4">🎉 Great News! Your Cash Offer Is Ready</h2>
-        <p class="text-white text-sm mt-1 mb-5" id="vehicleNameDisplay">Vehicle Details</p>
-      </div>
-
-      <div id="offerCard" class="compact-offer-card ring-2 ring-blue-400 shadow-2xl offer-reveal-card max-w-sm mx-auto mb-5 text-center">
-        <span class="compact-offer-label">Your Cash Offer</span>
-        <span class="compact-offer-value" id="finalOfferValue">$0,000</span>
-        <p class="offer-market-text">
-          Based on your vehicle information and current local buyer demand.
-        </p>
-
-        <div class="compact-benefits">
-          <div><span>✓</span> Free Towing</div>
-          <div><span>✓</span> No Hidden Fees</div>
-          <div><span>✓</span> Paid at Pickup</div>
-        </div>
-
-        <p class="compact-pickup-message">
-          Pickup Available <span id="pickupDayWord" class="compact-pickup-day">Today</span>
-        </p>
-      </div>
-
-      <div class="offer-reveal-steps compact-how-it-works upgraded-how-it-works max-w-sm mx-auto text-left mb-5 px-2">
-        <h3>Here's What Happens Next</h3>
-
-        <div class="upgraded-step-row">
-          <span class="upgraded-step-number">1</span>
-          <div class="upgraded-step-copy">
-            <div class="upgraded-step-title">Schedule Your Free Pickup</div>
-            <div class="upgraded-step-description">Choose a pickup date and time that works for you.</div>
+                <div id="pickupTimeMenu"
+                     class="pickup-time-up-menu"
+                     role="listbox"
+                     aria-label="Pickup Time">
+                  <button type="button" class="pickup-time-up-option" data-value="Morning (8AM - 12PM)">
+                    Morning (8AM - 12PM)
+                  </button>
+                  <button type="button" class="pickup-time-up-option" data-value="Afternoon (12PM - 4PM)">
+                    Afternoon (12PM - 4PM)
+                  </button>
+                  <button type="button" class="pickup-time-up-option" data-value="Evening (4PM - 7PM)">
+                    Evening (4PM - 7PM)
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="upgraded-step-row">
-          <span class="upgraded-step-number">2</span>
-          <div class="upgraded-step-copy">
-            <div class="upgraded-step-title">Get Paid at Pickup</div>
-            <div class="upgraded-step-description">We'll pay you when we pick up your vehicle.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="offer-reveal-actions max-w-sm mx-auto">
-        <button type="button" onclick="goToLogistics()" class="w-full bg-green-500 text-white py-3 px-4 rounded-xl font-black text-lg shadow-md hover:bg-green-600 transition tracking-wide mb-3">
-          Accept Cash Offer &amp; Schedule
-        </button>
-        <button type="button" onclick="goBackToForm()" class="w-full bg-gray-100 text-white py-2 rounded-xl font-semibold text-sm border border-blue-500 shadow-sm hover:bg-gray-200 transition">
-          &larr; Back
-        </button>
-      </div>
-
-      <div class="offer-security-note">
-        <span class="security-lock" aria-hidden="true">🔒</span>
-        Your information is secure and will never be sold.
-      </div>
-    </div>
-
-    <!-- NOT PURCHASING OTHER MAKES SORRY SCREEN -->
-    <div id="notPurchasingContainer" class="hidden text-center py-8">
-      <div class="inline-flex items-center justify-center w-16 h-16 bg-yellow-100 text-yellow-600 rounded-full mb-4">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-      </div>
-      <h2 class="text-xl font-bold text-white tracking-tight px-4">Sorry we are not purchasing other makes at this time. Please feel free to check back shortly.</h2>
-      <div class="mt-6">
-        <button type="button" onclick="goBackFromSorryScreen()" class="bg-gray-100 text-white px-4 py-2 rounded-lg font-medium border border-blue-500 hover:bg-gray-200 transition text-sm">
-          &larr; Change Vehicle Make
-        </button>
-      </div>
+      </section>
     </div>
 
 
-    <!-- FINAL REVIEW SCREEN -->
-    <div id="finalReviewContainer" class="hidden py-4">
-      <div class="text-center mb-5">
-        <h2 class="text-2xl font-black text-white">Review Your Pickup</h2>
-        <p class="text-sm text-white mt-1">Please confirm the details below before reserving your pickup.</p>
-      </div>
+    <!-- Navigation Footer Buttons -->
+    <div class="hidden mt-8 flex justify-between border-t pt-4" id="navFooter">
+      <button type="button" id="prevBtn" onclick="changeStep(-1)" class="invisible bg-gray-200 text-white px-4 py-2 rounded-lg font-medium hover:bg-black transition">Back</button>
+      <button type="button" id="nextBtn" onclick="changeStep(1)" class="bg-green-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-green-600 transition">Next</button>
+    </div>
+  </form>
+</div>
 
-      <div class="max-w-sm mx-auto bg-gray-50 border border-blue-500 rounded-2xl p-5 shadow-sm">
-        <div class="flex justify-between items-start py-2 border-b border-gray-200 gap-4">
-          <span class="text-sm text-white">Vehicle</span>
-          <span id="reviewVehicle" class="font-bold text-white text-right">Vehicle Details</span>
-        </div>
-        <div class="flex justify-between items-center py-2 border-b border-gray-200">
-          <span class="text-sm text-white">Cash Offer</span>
-          <span id="reviewOffer" class="font-black text-green-300 text-lg">$0</span>
-        </div>
-        <div class="flex justify-between items-center py-2 border-b border-gray-200 gap-4">
-          <span class="text-sm text-white">Pickup Date</span>
-          <span id="reviewDate" class="font-bold text-white text-right">Selected</span>
-        </div>
-        <div class="flex justify-between items-center py-2 border-b border-gray-200 gap-4">
-          <span class="text-sm text-white">Pickup Window</span>
-          <span id="reviewTime" class="font-bold text-white text-right">Selected</span>
-        </div>
-        <div class="flex justify-between items-start py-2 gap-4">
-          <span class="text-sm text-white">Pickup Address</span>
-          <span id="reviewAddress" class="font-bold text-white text-right">Address</span>
-        </div>
-      </div>
+<!-- STAGE 1 OFFER SCREEN -->
+<div id="offerResultContainer" class="hidden text-center py-4">
+  <div class="offer-reveal-header">
+    <div class="offer-success-icon inline-flex items-center justify-center w-16 h-16 text-green-300 rounded-full mb-3">
+      <div id="offerConfettiLayer" class="offer-confetti-layer" aria-hidden="true"></div>
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <circle class="offer-circle" cx="32" cy="32" r="28"></circle>
+        <path class="offer-check" d="M19 33.5l8.5 8.5L46 23.5"></path>
+      </svg>
+    </div>
+    <h2 class="text-2xl font-black text-white tracking-tight leading-tight px-4">🎉 Great News! Your Cash Offer Is Ready</h2>
+    <p class="text-white text-sm mt-1 mb-5" id="vehicleNameDisplay">Vehicle Details</p>
+  </div>
 
-      <label class="max-w-sm mx-auto mt-5 flex items-start gap-3 bg-blue-50 border border-blue-200 rounded-xl p-4 cursor-pointer">
-        <input type="checkbox" id="consentCheckbox" class="mt-1 h-4 w-4" required>
-        <span class="text-sm text-white">
-          I confirm that the vehicle details are accurate, and I authorize contact by call or text regarding my offer and pickup.
-        </span>
-      </label>
+  <div id="offerCard" class="compact-offer-card ring-2 ring-blue-400 shadow-2xl offer-reveal-card max-w-sm mx-auto mb-5 text-center">
+    <span class="compact-offer-label">Your Cash Offer</span>
+    <span class="compact-offer-value" id="finalOfferValue">$0,000</span>
+    <p class="offer-market-text">
+      Based on your vehicle information and current local buyer demand.
+    </p>
 
-      <div class="max-w-sm mx-auto mt-5 flex gap-3">
-        <button type="button" onclick="goBackToPickupForm()" class="bg-gray-200 text-white px-4 py-3 rounded-xl font-semibold hover:bg-black transition">
-          Back
-        </button>
-        <button
-          type="button"
-          id="confirmPickupBtn"
-          onclick="confirmFinalSubmission()"
-          class="flex-1 bg-green-500 text-white px-6 py-3 rounded-xl font-black hover:bg-green-600 transition shadow-md"
-          aria-label="Confirm Pickup">
-          Confirm Pickup
-        </button>
+    <div class="compact-benefits">
+      <div><span>✓</span> Free Towing</div>
+      <div><span>✓</span> No Hidden Fees</div>
+      <div><span>✓</span> Paid at Pickup</div>
+    </div>
+
+    <p class="compact-pickup-message">
+      Pickup Available <span id="pickupDayWord" class="compact-pickup-day">Today</span>
+    </p>
+  </div>
+
+  <div class="offer-reveal-steps compact-how-it-works upgraded-how-it-works max-w-sm mx-auto text-left mb-5 px-2">
+    <h3>Here's What Happens Next</h3>
+
+    <div class="upgraded-step-row">
+      <span class="upgraded-step-number">1</span>
+      <div class="upgraded-step-copy">
+        <div class="upgraded-step-title">Schedule Your Free Pickup</div>
+        <div class="upgraded-step-description">Choose a pickup date and time that works for you.</div>
       </div>
     </div>
 
-    <!-- STAGE 2 FINAL SUCCESS CONFIRMATION -->
-    <div id="finalSuccessContainer" class="hidden text-center py-6">
-      <div class="confirmation-icon inline-flex items-center justify-center w-20 h-20 bg-green-100 text-green-300 rounded-full mb-4 shadow-sm">
-        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+    <div class="upgraded-step-row">
+      <span class="upgraded-step-number">2</span>
+      <div class="upgraded-step-copy">
+        <div class="upgraded-step-title">Get Paid at Pickup</div>
+        <div class="upgraded-step-description">We'll pay you when we pick up your vehicle.</div>
       </div>
-      <h2 class="text-3xl font-black text-white tracking-tight">🎉 Your Pickup Has Been Reserved</h2>
-      <p class="text-white text-sm mt-2 mb-6 px-4">Our dispatch agent will coordinate with you via text or phone call. Payment will be provided when the vehicle is picked up.</p>
     </div>
+  </div>
+
+  <div class="offer-reveal-actions max-w-sm mx-auto">
+    <button type="button" onclick="goToLogistics()" class="w-full bg-green-500 text-white py-3 px-4 rounded-xl font-black text-lg shadow-md hover:bg-green-600 transition tracking-wide mb-3">
+      Accept Cash Offer &amp; Schedule
+    </button>
+    <button type="button" onclick="goBackToForm()" class="w-full bg-gray-100 text-white py-2 rounded-xl font-semibold text-sm border border-blue-500 shadow-sm hover:bg-gray-200 transition">
+      &larr; Back
+    </button>
+  </div>
+
+  <div class="offer-security-note">
+    <span class="security-lock" aria-hidden="true">🔒</span>
+    Your information is secure and will never be sold.
+  </div>
+</div>
+
+<!-- NOT PURCHASING OTHER MAKES SORRY SCREEN -->
+<div id="notPurchasingContainer" class="hidden text-center py-8">
+  <div class="inline-flex items-center justify-center w-16 h-16 bg-yellow-100 text-yellow-600 rounded-full mb-4">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+  </div>
+  <h2 class="text-xl font-bold text-white tracking-tight px-4">Sorry we are not purchasing other makes at this time. Please feel free to check back shortly.</h2>
+  <div class="mt-6">
+    <button type="button" onclick="goBackFromSorryScreen()" class="bg-gray-100 text-white px-4 py-2 rounded-lg font-medium border border-blue-500 hover:bg-gray-200 transition text-sm">
+      &larr; Change Vehicle Make
+    </button>
+  </div>
+</div>
+
+
+<!-- FINAL REVIEW SCREEN -->
+<div id="finalReviewContainer" class="hidden py-4">
+  <div class="text-center mb-5">
+    <h2 class="text-2xl font-black text-white">Review Your Pickup</h2>
+    <p class="text-sm text-white mt-1">Please confirm the details below before reserving your pickup.</p>
+  </div>
+
+  <div class="max-w-sm mx-auto bg-gray-50 border border-blue-500 rounded-2xl p-5 shadow-sm">
+    <div class="flex justify-between items-start py-2 border-b border-gray-200 gap-4">
+      <span class="text-sm text-white">Vehicle</span>
+      <span id="reviewVehicle" class="font-bold text-white text-right">Vehicle Details</span>
+    </div>
+    <div class="flex justify-between items-center py-2 border-b border-gray-200">
+      <span class="text-sm text-white">Cash Offer</span>
+      <span id="reviewOffer" class="font-black text-green-300 text-lg">$0</span>
+    </div>
+    <div class="flex justify-between items-center py-2 border-b border-gray-200 gap-4">
+      <span class="text-sm text-white">Pickup Date</span>
+      <span id="reviewDate" class="font-bold text-white text-right">Selected</span>
+    </div>
+    <div class="flex justify-between items-center py-2 border-b border-gray-200 gap-4">
+      <span class="text-sm text-white">Pickup Window</span>
+      <span id="reviewTime" class="font-bold text-white text-right">Selected</span>
+    </div>
+    <div class="flex justify-between items-start py-2 gap-4">
+      <span class="text-sm text-white">Pickup Address</span>
+      <span id="reviewAddress" class="font-bold text-white text-right">Address</span>
+    </div>
+  </div>
+
+  <label class="max-w-sm mx-auto mt-5 flex items-start gap-3 bg-blue-50 border border-blue-200 rounded-xl p-4 cursor-pointer">
+    <input type="checkbox" id="consentCheckbox" class="mt-1 h-4 w-4" required>
+    <span class="text-sm text-white">
+      I confirm that the vehicle details are accurate, and I authorize contact by call or text regarding my offer and pickup.
+    </span>
+  </label>
+
+  <div class="max-w-sm mx-auto mt-5 flex gap-3">
+    <button type="button" onclick="goBackToPickupForm()" class="bg-gray-200 text-white px-4 py-3 rounded-xl font-semibold hover:bg-black transition">
+      Back
+    </button>
+    <button
+      type="button"
+      id="confirmPickupBtn"
+      onclick="confirmFinalSubmission()"
+      class="flex-1 bg-green-500 text-white px-6 py-3 rounded-xl font-black hover:bg-green-600 transition shadow-md"
+      aria-label="Confirm Pickup">
+      Confirm Pickup
+    </button>
+  </div>
+</div>
+
+<!-- STAGE 2 FINAL SUCCESS CONFIRMATION -->
+<div id="finalSuccessContainer" class="hidden text-center py-6">
+  <div class="confirmation-icon inline-flex items-center justify-center w-20 h-20 bg-green-100 text-green-300 rounded-full mb-4 shadow-sm">
+    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+  </div>
+  <h2 class="text-3xl font-black text-white tracking-tight">🎉 Your Pickup Has Been Reserved</h2>
+  <p class="text-white text-sm mt-2 mb-6 px-4">Our dispatch agent will coordinate with you via text or phone call. Payment will be provided when the vehicle is picked up.</p>
+</div>
 
   </div>
 
@@ -3653,38 +2983,35 @@ margin-top:.2rem;
     function notifyCashOfferGenerated() {
       if (cashOfferNotificationSent) return;
 
-      if (
-        typeof google === 'undefined' ||
-        !google.script ||
-        !google.script.run
-      ) {
-        console.warn('Cash-offer notification was not sent because Google Apps Script is unavailable.');
-        return;
-      }
-
       const offerData = {
+        eventType: 'cash_offer_generated',
         offerAmount: globalCalculatedOffer,
-        year: document.getElementById('year').value,
-        make: document.getElementById('make').value,
-        model: document.getElementById('model').value,
-        mileage: document.getElementById('mileage').value,
-        vehicleCondition: document.getElementById('starts').value,
-        titleStatus: document.getElementById('titleType').value,
-        registrationStatus: document.getElementById('registration').value,
-        damage: document.getElementById('damage').value,
-        panels: document.getElementById('panels').value,
-        glass: document.getElementById('glass').value,
-        interior: document.getElementById('interior').value
+        year: document.getElementById('year')?.value || '',
+        make: document.getElementById('make')?.value || '',
+        model: document.getElementById('model')?.value || '',
+        mileage: document.getElementById('mileage')?.value || '',
+        vehicleCondition: document.getElementById('starts')?.value || '',
+        titleStatus: document.getElementById('titleType')?.value || '',
+        registrationStatus: document.getElementById('registration')?.value || '',
+        damage: document.getElementById('damage')?.value || '',
+        panels: document.getElementById('panels')?.value || '',
+        glass: document.getElementById('glass')?.value || '',
+        interior: document.getElementById('interior')?.value || ''
       };
 
       cashOfferNotificationSent = true;
 
-      google.script.run
-        .withFailureHandler(function(error) {
-          cashOfferNotificationSent = false;
-          console.error('Cash-offer Zapier notification failed:', error);
-        })
-        .sendCashOfferToZapier(offerData);
+      fetch('/.netlify/functions/submit-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(offerData)
+      })
+      .then(r => r.json())
+      .then(r => console.log('Cash offer sent', r))
+      .catch(err => {
+        cashOfferNotificationSent = false;
+        console.error(err);
+      });
     }
 
     function showCalculatedOfferScreen() {
@@ -4387,7 +3714,6 @@ margin-top:.2rem;
   })();
 </script>
 
-
 <script>
 (function () {
   function setupPickupTimeUpMenu() {
@@ -4460,7 +3786,6 @@ margin-top:.2rem;
 
 </script>
 
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const pickupDateInput =
@@ -4480,7 +3805,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
-
 
 <script>
 (function () {
