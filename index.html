@@ -712,9 +712,30 @@ input::placeholder,textarea::placeholder {color: #9CA3AF !important;opacity: 1 !
 
 /* FINAL VISIBILITY ENHANCEMENTS */
 
-/* Dropdown items: white text whenever hovered, focused, selected, or active */.custom-select-option,.custom-select-option,.custom-select-option.selected,.custom-select-option {background: #111827 !important;color: #FFFFFF !important;}
+/* Restore white custom dropdown options */
+.custom-select-option {
+  background: #FFFFFF !important;
+  color: #374151 !important;
+}
+.custom-select-option:hover,
+.custom-select-option:focus {
+  background: #F3F4F6 !important;
+  color: #111827 !important;
+}
+.custom-select-option.selected {
+  background: #E5E7EB !important;
+  color: #111827 !important;
+}
 
-/* Native select highlighted option */select option,select option,select option {background: #111827 !important;color: #FFFFFF !important;}
+/* Restore white native dropdown options */
+select option {
+  background: #FFFFFF !important;
+  color: #111827 !important;
+}
+select option:checked {
+  background: #E5E7EB !important;
+  color: #111827 !important;
+}
 
 /* Upload image page: make all wording clearly visible */#step4,#step4 h1,#step4 h2,#step4 h3,#step4 p,#step4 span,#step4 label {color: #FFFFFF !important;}
 
@@ -3933,6 +3954,16 @@ document.addEventListener('DOMContentLoaded', function () {
     setupMobileDesktopCalendar();
   }
 })();
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+ const el=[...document.querySelectorAll('*')].find(e=>/We offer same-day pickup if booked before 2 ?PM/i.test(e.textContent));
+ if(!el) return;
+ const hr=new Date().getHours();
+ if(hr>=14){el.style.display='none';}
+});
 </script>
 
 </body>
