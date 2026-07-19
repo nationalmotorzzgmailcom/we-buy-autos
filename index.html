@@ -3645,6 +3645,48 @@ margin-top:.2rem;
       }, 1200);
     }
 
+
+    // Sends a separate notification when a visitor receives a calculated cash offer.
+    // This calls sendCashOfferToZapier() in Code.gs and does not alter the existing booking Zap.
+    let cashOfferNotificationSent = false;
+
+    function notifyCashOfferGenerated() {
+      if (cashOfferNotificationSent) return;
+
+      if (
+        typeof google === 'undefined' ||
+        !google.script ||
+        !google.script.run
+      ) {
+        console.warn('Cash-offer notification was not sent because Google Apps Script is unavailable.');
+        return;
+      }
+
+      const offerData = {
+        offerAmount: globalCalculatedOffer,
+        year: document.getElementById('year').value,
+        make: document.getElementById('make').value,
+        model: document.getElementById('model').value,
+        mileage: document.getElementById('mileage').value,
+        vehicleCondition: document.getElementById('starts').value,
+        titleStatus: document.getElementById('titleType').value,
+        registrationStatus: document.getElementById('registration').value,
+        damage: document.getElementById('damage').value,
+        panels: document.getElementById('panels').value,
+        glass: document.getElementById('glass').value,
+        interior: document.getElementById('interior').value
+      };
+
+      cashOfferNotificationSent = true;
+
+      google.script.run
+        .withFailureHandler(function(error) {
+          cashOfferNotificationSent = false;
+          console.error('Cash-offer Zapier notification failed:', error);
+        })
+        .sendCashOfferToZapier(offerData);
+    }
+
     function showCalculatedOfferScreen() {
       if (!document.getElementById('offerResultContainer').classList.contains('hidden')) return;
       document.getElementById('formContainer').classList.add('hidden');
@@ -3654,6 +3696,7 @@ margin-top:.2rem;
 
       runOfferLoadingSequence(() => {
         globalCalculatedOffer = calculateInstantOffer();
+        notifyCashOfferGenerated();
         const yr = document.getElementById('year').value;
         const mk = document.getElementById('make').value;
         const md = document.getElementById('model').value;
