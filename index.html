@@ -2590,7 +2590,7 @@ margin-top:.2rem;
 
     <div id="acceptOfferLoadingOverlay" class="hidden text-center py-12">
       <div class="spinner mb-4"></div>
-      <p class="text-white font-semibold min-h-6">Finalizing your secure pickup details...<br><span style="font-size:0.9em;font-weight:600;">Almost done! One final step...</span></p>
+      <p class="text-white font-semibold min-h-6">Finalizing your secure pickup details...</p>
     </div>
 
     <!-- Questionnaire View Container -->
@@ -3660,6 +3660,13 @@ margin-top:.2rem;
 
       const acceptLoadingOverlay = document.getElementById('acceptOfferLoadingOverlay');
       acceptLoadingOverlay.classList.remove('hidden');
+
+      const acceptLoadingText = acceptLoadingOverlay.querySelector('p');
+      acceptLoadingText.textContent = 'Finalizing your secure pickup details...';
+      window.setTimeout(function() {
+        acceptLoadingText.textContent = 'Almost done! One final step...';
+      },1500);
+
 
       window.setTimeout(function() {
         acceptLoadingOverlay.classList.add('hidden');
