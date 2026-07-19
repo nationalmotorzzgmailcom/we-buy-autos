@@ -1,5 +1,5 @@
 const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyNGLgNwZzhMwOoKtlw8LGqeoia4jI31VsQLLkSiYGAoEFFSFOq5dEoRASiDuzAoqzq/exec";
+  "https://script.google.com/macros/s/AKfycbwUhx4huTs1L988X23eToKcVKEXBh5vVp_xAzvOu3u0WvvdpbH5KyVRzHNPurqucoJK/exec";
 
 exports.handler = async function (event) {
   const headers = {
