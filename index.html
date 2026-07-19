@@ -2253,6 +2253,47 @@ body:has(#step1.active) > div:first-of-type {
 }
 </style>
 
+
+<style>
+/* Stretch first page on mobile only */
+@media (max-width:768px){
+  #step1{
+    width:100% !important;
+  }
+  #step1 .space-y-4{
+    max-width:100% !important;
+    width:100% !important;
+  }
+  #step1 h2{
+    font-size:2rem !important;
+    line-height:1.15 !important;
+  }
+  #step1>p{
+    font-size:1rem !important;
+    margin-bottom:1rem !important;
+  }
+  #step1 label{
+    font-size:1rem !important;
+  }
+  #step1 select,
+  #step1 input{
+    min-height:58px !important;
+    font-size:1.05rem !important;
+  }
+  #step1 .grid,
+  #step1 .grid-cols-2{
+    gap:16px !important;
+  }
+  #step1 #firstPageCtaRow{
+    margin-top:1.25rem !important;
+  }
+  #step1 #firstPageCtaRow button{
+    min-height:60px !important;
+    font-size:1.15rem !important;
+  }
+}
+</style>
+
 </head>
 <body class="bg-black font-sans min-h-screen flex items-center justify-center p-4">
 
