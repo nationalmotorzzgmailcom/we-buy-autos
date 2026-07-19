@@ -1408,7 +1408,7 @@ select option:focus {
 <style>
 body:has(#step5.active) {
   align-items:flex-start!important;
-  background:#2563EB!important;
+  background:#000!important;
   padding:0!important;
 }
 body:has(#step5.active)>div{
@@ -1419,7 +1419,7 @@ body:has(#step5.active)>div{
   overflow:hidden!important;
   border:1px solid rgba(203,213,225,.58)!important;
   border-radius:18px!important;
-  background:linear-gradient(180deg,#2563EB 0%,#1D4ED8 100%)!important;
+  background:radial-gradient(circle at 50% 4%,rgba(18,31,45,.24),transparent 32%),linear-gradient(145deg,#080d12 0%,#060b10 55%,#05080b 100%)!important;
   box-shadow:none!important;
 }
 body:has(#step5.active) #progressBlock{display:none!important}
@@ -2786,7 +2786,7 @@ margin-top:.2rem;
                             class="pickup-time-up-button"
                             aria-haspopup="listbox"
                             aria-expanded="false">
-                      <span id="pickupTimeButtonText">Select Pickup Time</span>
+                      <span id="pickupTimeButtonText">Select Time</span>
                     </button>
 
                     <div id="pickupTimeMenu"
