@@ -1390,20 +1390,30 @@ select option:focus {
 
 
 
-/* Much larger loading circle and words only before the offer page */
+/* Smaller loading circle and words only before the offer page */
 #loadingOverlay.offer-loading-large .spinner {
-  width: 108px !important;
-  height: 108px !important;
-  border-width: 10px !important;
+  width: 52px !important;
+  height: 52px !important;
+  border-width: 5px !important;
 }
 
 #loadingOverlay.offer-loading-large #loadingText {
-  font-size: 30px !important;
+  font-size: 19px !important;
   line-height: 1.35 !important;
   font-weight: 700 !important;
-  max-width: 92% !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+}
+
+/* Loader shown after accepting the cash offer */
+#acceptOfferLoadingOverlay .spinner {
+  width: 52px !important;
+  height: 52px !important;
+  border-width: 5px !important;
+}
+
+#acceptOfferLoadingOverlay p {
+  font-size: 19px !important;
+  line-height: 1.35 !important;
+  font-weight: 700 !important;
 }
 /* Keep the Zip Code placeholder fully visible */
 #step5 #zip {
@@ -2578,6 +2588,11 @@ margin-top:.2rem;
       <p id="loadingText" class="text-white font-semibold min-h-6">✓ Checking market demand...</p>
     </div>
 
+    <div id="acceptOfferLoadingOverlay" class="hidden text-center py-12">
+      <div class="spinner mb-4"></div>
+      <p class="text-white font-semibold min-h-6">Finalizing your secure pickup details...<br><span style="font-size:0.9em;font-weight:600;">Almost done! One final step...</span></p>
+    </div>
+
     <!-- Questionnaire View Container -->
     <div id="formContainer">
       <!-- Progress Indicator -->
@@ -3642,26 +3657,33 @@ margin-top:.2rem;
 
     function goToLogistics() {
       document.getElementById('offerResultContainer').classList.add('hidden');
-      document.getElementById('formContainer').classList.remove('hidden');
-      document.getElementById('progressBlock').classList.add('hidden');
 
-      document.querySelectorAll('.step').forEach(step => step.classList.remove('active', 'slide-back'));
-      currentStep = 5;
-      document.getElementById('step5').classList.add('active');
-      document.getElementById('navFooter').classList.remove('hidden');
+      const acceptLoadingOverlay = document.getElementById('acceptOfferLoadingOverlay');
+      acceptLoadingOverlay.classList.remove('hidden');
 
-      updateConditionalSameDayPromo();
-      setMinimumPickupDate();
+      window.setTimeout(function() {
+        acceptLoadingOverlay.classList.add('hidden');
+        document.getElementById('formContainer').classList.remove('hidden');
+        document.getElementById('progressBlock').classList.add('hidden');
 
-      const submitButton = document.getElementById('nextBtn');
-      submitButton.disabled = false;
-      submitButton.classList.remove('opacity-60', 'cursor-not-allowed');
-      submitButton.innerText = "Schedule Your Free Pickup";
-      submitButton.onclick = function() {
-        finalizeFullFormSubmission();
-      };
+        document.querySelectorAll('.step').forEach(step => step.classList.remove('active', 'slide-back'));
+        currentStep = 5;
+        document.getElementById('step5').classList.add('active');
+        document.getElementById('navFooter').classList.remove('hidden');
 
-      document.getElementById('prevBtn').style.visibility = 'visible';
+        updateConditionalSameDayPromo();
+        setMinimumPickupDate();
+
+        const submitButton = document.getElementById('nextBtn');
+        submitButton.disabled = false;
+        submitButton.classList.remove('opacity-60', 'cursor-not-allowed');
+        submitButton.innerText = "Schedule Your Free Pickup";
+        submitButton.onclick = function() {
+          finalizeFullFormSubmission();
+        };
+
+        document.getElementById('prevBtn').style.visibility = 'visible';
+      }, 3000);
     }
 
 
