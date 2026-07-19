@@ -2320,6 +2320,56 @@ body:has(#step1.active) > div:first-of-type {
 }
 </style>
 
+
+<style>
+@media (max-width:768px){
+  /* Extra stretched mobile first page only */
+  #step1{
+    padding-top:18px!important;
+    padding-bottom:18px!important;
+  }
+
+  #step1 h2{
+    font-size:2.65rem!important;
+    line-height:1.03!important;
+    margin-bottom:.75rem!important;
+  }
+
+  #step1>p{
+    font-size:1.18rem!important;
+    line-height:1.5!important;
+    margin-bottom:1.6rem!important;
+  }
+
+  #step1 label{
+    font-size:1.12rem!important;
+    margin-bottom:.55rem!important;
+  }
+
+  #step1 .space-y-4>*+*{
+    margin-top:1.4rem!important;
+  }
+
+  #step1 input,
+  #step1 select{
+    min-height:72px!important;
+    font-size:1.18rem!important;
+    padding:0 18px!important;
+    border-radius:14px!important;
+  }
+
+  #step1 #firstPageCtaRow{
+    margin-top:1.9rem!important;
+  }
+
+  #step1 #firstPageCtaRow button{
+    min-height:74px!important;
+    font-size:1.3rem!important;
+    border-radius:18px!important;
+  }
+}
+</style>
+
 </head>
 <body class="bg-black font-sans min-h-screen flex items-center justify-center p-4">
 
@@ -4122,6 +4172,27 @@ body:has(#step1.active) > div:first-of-type {
 })();
 
 
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const pickupDateInput =
+    document.getElementById('pickupDate') ||
+    document.querySelector('input[name="pickupDate"]') ||
+    document.querySelector('#step5 input[type="date"]') ||
+    document.querySelector('input[type="date"]');
+
+  if (!pickupDateInput || pickupDateInput.dataset.autoCloseCalendar === 'true') return;
+
+  pickupDateInput.dataset.autoCloseCalendar = 'true';
+
+  pickupDateInput.addEventListener('change', function () {
+    if (this.value) {
+      this.blur();
+    }
+  });
+});
 </script>
 
 </body>
