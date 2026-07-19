@@ -2390,6 +2390,126 @@ margin-top:.2rem;
 }
 </style>
 
+
+
+<style>
+/* Mobile desktop-style pickup calendar */
+.mobile-pickup-calendar {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(320px, calc(100vw - 28px));
+  z-index: 1000000;
+  background: #FFFFFF;
+  color: #111827;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.34);
+  padding: 12px;
+  font-family: Arial, sans-serif;
+}
+.mobile-pickup-calendar.open { display: block; }
+.mobile-calendar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(0,0,0,.38);
+}
+.mobile-calendar-backdrop.open { display: block; }
+.mobile-calendar-header {
+  display: grid;
+  grid-template-columns: 34px 1fr 34px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.mobile-calendar-month {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #9CA3AF;
+  border-radius: 4px;
+  background: #F3F4F6;
+  color: #111827 !important;
+  font-size: 14px;
+  font-weight: 500;
+}
+.mobile-calendar-nav {
+  width: 34px;
+  height: 32px;
+  border: 0;
+  background: transparent;
+  color: #9CA3AF !important;
+  font-size: 25px;
+  line-height: 1;
+  padding: 0;
+}
+.mobile-calendar-nav:disabled { opacity: .25; }
+.mobile-calendar-weekdays,
+.mobile-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+.mobile-calendar-weekdays { margin-bottom: 5px; }
+.mobile-calendar-weekday {
+  text-align: center;
+  color: #6B7280 !important;
+  font-size: 11px;
+  line-height: 22px;
+}
+.mobile-calendar-weekday:first-child,
+.mobile-calendar-weekday:last-child { color: #EF4444 !important; }
+.mobile-calendar-day {
+  height: 31px;
+  border: 0;
+  border-radius: 3px;
+  background: #E5E7EB;
+  color: #111827 !important;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0;
+}
+.mobile-calendar-day.outside {
+  background: #F3F4F6;
+  color: #9CA3AF !important;
+}
+.mobile-calendar-day.weekend { color: #EF4444 !important; }
+.mobile-calendar-day:disabled {
+  opacity: .42;
+  cursor: not-allowed;
+}
+.mobile-calendar-day.selected {
+  outline: 2px solid #2563EB;
+  outline-offset: 1px;
+  background: #FFFFFF;
+}
+.mobile-calendar-footer {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #E5E7EB;
+}
+.mobile-calendar-clear {
+  min-height: 30px;
+  padding: 4px 12px;
+  border: 1px solid #9CA3AF;
+  border-radius: 2px;
+  background: #F3F4F6;
+  color: #111827 !important;
+  font-size: 12px;
+}
+@media (min-width: 769px) {
+  .mobile-pickup-calendar,
+  .mobile-calendar-backdrop { display: none !important; }
+}
+</style>
+
 </head>
 <body class="bg-black font-sans min-h-screen flex items-center justify-center p-4">
 
@@ -2637,6 +2757,22 @@ margin-top:.2rem;
                     <span class="exact-input-icon" aria-hidden="true">▣</span>
                     <input type="date" name="pickupDate" id="pickupDate"
                            required aria-label="Select pickup date">
+                    <div id="mobileCalendarBackdrop" class="mobile-calendar-backdrop" aria-hidden="true"></div>
+                    <div id="mobilePickupCalendar" class="mobile-pickup-calendar" role="dialog" aria-modal="true" aria-label="Choose pickup date">
+                      <div class="mobile-calendar-header">
+                        <button type="button" id="mobileCalendarPrev" class="mobile-calendar-nav" aria-label="Previous month">‹</button>
+                        <div id="mobileCalendarMonth" class="mobile-calendar-month"></div>
+                        <button type="button" id="mobileCalendarNext" class="mobile-calendar-nav" aria-label="Next month">›</button>
+                      </div>
+                      <div class="mobile-calendar-weekdays" aria-hidden="true">
+                        <div class="mobile-calendar-weekday">Sun</div><div class="mobile-calendar-weekday">Mon</div><div class="mobile-calendar-weekday">Tue</div><div class="mobile-calendar-weekday">Wed</div><div class="mobile-calendar-weekday">Thu</div><div class="mobile-calendar-weekday">Fri</div><div class="mobile-calendar-weekday">Sat</div>
+                      </div>
+                      <div id="mobileCalendarGrid" class="mobile-calendar-grid"></div>
+                      <div class="mobile-calendar-footer">
+                        <button type="button" id="mobileCalendarClear" class="mobile-calendar-clear">Clear</button>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
 
@@ -4239,6 +4375,136 @@ document.addEventListener('DOMContentLoaded', function () {
       }, 180);
     });
   });
+})();
+</script>
+
+
+<script>
+(function () {
+  function setupMobileDesktopCalendar() {
+    const input = document.getElementById('pickupDate');
+    const popup = document.getElementById('mobilePickupCalendar');
+    const backdrop = document.getElementById('mobileCalendarBackdrop');
+    const grid = document.getElementById('mobileCalendarGrid');
+    const monthLabel = document.getElementById('mobileCalendarMonth');
+    const prev = document.getElementById('mobileCalendarPrev');
+    const next = document.getElementById('mobileCalendarNext');
+    const clear = document.getElementById('mobileCalendarClear');
+    if (!input || !popup || !backdrop || !grid || !monthLabel || !prev || !next || !clear) return;
+
+    let viewDate = new Date();
+    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+    const parseLocal = value => {
+      if (!value) return null;
+      const parts = value.split('-').map(Number);
+      return new Date(parts[0], parts[1] - 1, parts[2]);
+    };
+    const formatValue = date => {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    };
+    const sameDay = (a, b) => a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+
+    function bounds() {
+      return {
+        min: parseLocal(typeof getEarliestPickupDateString === 'function' ? getEarliestPickupDateString() : input.min),
+        max: parseLocal(typeof getLatestPickupDateString === 'function' ? getLatestPickupDateString() : input.max)
+      };
+    }
+
+    function render() {
+      const selected = parseLocal(input.value);
+      const { min, max } = bounds();
+      const year = viewDate.getFullYear();
+      const month = viewDate.getMonth();
+      monthLabel.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(new Date(year, month, 1));
+      grid.innerHTML = '';
+
+      const first = new Date(year, month, 1);
+      const start = new Date(year, month, 1 - first.getDay());
+      for (let i = 0; i < 42; i++) {
+        const date = new Date(start);
+        date.setDate(start.getDate() + i);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'mobile-calendar-day';
+        button.textContent = date.getDate();
+        if (date.getMonth() !== month) button.classList.add('outside');
+        if (date.getDay() === 0 || date.getDay() === 6) button.classList.add('weekend');
+        if (sameDay(date, selected)) button.classList.add('selected');
+        const unavailable = (min && date < min) || (max && date > max);
+        button.disabled = unavailable;
+        button.setAttribute('aria-label', new Intl.DateTimeFormat('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' }).format(date));
+        button.addEventListener('click', function () {
+          input.value = formatValue(date);
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+          closeCalendar();
+        });
+        grid.appendChild(button);
+      }
+
+      const firstView = new Date(year, month, 1);
+      const minMonth = new Date(min.getFullYear(), min.getMonth(), 1);
+      const maxMonth = new Date(max.getFullYear(), max.getMonth(), 1);
+      prev.disabled = firstView <= minMonth;
+      next.disabled = firstView >= maxMonth;
+    }
+
+    function openCalendar(event) {
+      if (!isMobile()) return;
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      const selected = parseLocal(input.value);
+      const { min } = bounds();
+      viewDate = selected || min || new Date();
+      popup.classList.add('open');
+      backdrop.classList.add('open');
+      popup.setAttribute('aria-hidden', 'false');
+      render();
+    }
+
+    function closeCalendar() {
+      popup.classList.remove('open');
+      backdrop.classList.remove('open');
+      popup.setAttribute('aria-hidden', 'true');
+      input.blur();
+    }
+
+    ['click', 'touchend'].forEach(type => input.addEventListener(type, openCalendar, { passive: false }));
+    input.addEventListener('keydown', function (event) {
+      if (isMobile() && (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown')) openCalendar(event);
+    });
+    prev.addEventListener('click', function () { viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1); render(); });
+    next.addEventListener('click', function () { viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1); render(); });
+    clear.addEventListener('click', function () {
+      input.value = '';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      closeCalendar();
+    });
+    backdrop.addEventListener('click', closeCalendar);
+    document.addEventListener('keydown', function (event) { if (event.key === 'Escape') closeCalendar(); });
+    window.addEventListener('resize', function () { if (!isMobile()) closeCalendar(); });
+
+    // Prevent the mobile browser's native date picker while preserving desktop behavior.
+    input.addEventListener('focus', function (event) {
+      if (isMobile()) {
+        input.blur();
+        openCalendar(event);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMobileDesktopCalendar);
+  } else {
+    setupMobileDesktopCalendar();
+  }
 })();
 </script>
 
