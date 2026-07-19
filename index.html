@@ -2825,25 +2825,6 @@ margin-top:.2rem;
       <h2 class="text-3xl font-black text-white tracking-tight">🎉 Your Pickup Has Been Reserved</h2>
       <p class="text-white text-sm mt-2 mb-6 px-4">Your pickup is reserved. A dispatch agent will coordinate with you by text shortly.</p>
 
-      <div class="max-w-sm mx-auto bg-gray-50 border border-blue-500 rounded-2xl p-5 text-left shadow-sm">
-        <div class="flex justify-between items-center py-2 border-b border-gray-200">
-          <span class="text-sm text-white">Cash Offer</span>
-          <span id="confirmationOffer" class="font-black text-green-300 text-lg">$0</span>
-        </div>
-        <div class="flex justify-between items-center py-2 border-b border-gray-200">
-          <span class="text-sm text-white">Pickup Date</span>
-          <span id="confirmationDate" class="font-bold text-white text-right">Reserved</span>
-        </div>
-        <div class="flex justify-between items-center py-2 border-b border-gray-200">
-          <span class="text-sm text-white">Pickup Window</span>
-          <span id="confirmationTime" class="font-bold text-white text-right ml-4">Selected</span>
-        </div>
-        <div class="flex justify-between items-center py-2">
-          <span class="text-sm text-white">Status</span>
-          <span class="inline-flex items-center text-xs font-bold text-green-700 bg-green-100 px-3 py-1 rounded-full">✓ RESERVED</span>
-        </div>
-      </div>
-
       <p class="text-xs text-white mt-5 px-4">Payment is provided when your vehicle is picked up.</p>
     </div>
 
@@ -2874,13 +2855,28 @@ margin-top:.2rem;
       return `${year}-${month}-${day}`;
     }
 
+    function getLatestPickupDateString() {
+      const latest = new Date();
+      latest.setDate(latest.getDate() + 3);
+
+      const year = latest.getFullYear();
+      const month = String(latest.getMonth() + 1).padStart(2, '0');
+      const day = String(latest.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
     function setMinimumPickupDate() {
       const pickupDateInput = document.getElementById('pickupDate');
       const earliestDate = getEarliestPickupDateString();
+      const latestDate = getLatestPickupDateString();
 
       pickupDateInput.setAttribute('min', earliestDate);
+      pickupDateInput.setAttribute('max', latestDate);
 
-      if (pickupDateInput.value && pickupDateInput.value < earliestDate) {
+      if (
+        pickupDateInput.value &&
+        (pickupDateInput.value < earliestDate || pickupDateInput.value > latestDate)
+      ) {
         pickupDateInput.value = '';
       }
     }
@@ -2888,6 +2884,7 @@ margin-top:.2rem;
     function validatePickupDate(showMessage = true) {
       const pickupDateInput = document.getElementById('pickupDate');
       const earliestDate = getEarliestPickupDateString();
+      const latestDate = getLatestPickupDateString();
 
       setMinimumPickupDate();
       pickupDateInput.setCustomValidity('');
@@ -2901,6 +2898,9 @@ margin-top:.2rem;
             ? 'Same-day pickup is unavailable after 2:00 PM. Please select tomorrow or a future date.'
             : 'Please select today or a future date.'
         );
+      } else if (pickupDateInput.value > latestDate) {
+        pickupDateInput.value = '';
+        pickupDateInput.setCustomValidity('Please select a pickup date within the next 3 days.');
       }
 
       if (!pickupDateInput.checkValidity()) {
@@ -3698,10 +3698,6 @@ margin-top:.2rem;
               }
               return;
             }
-
-            document.getElementById('confirmationOffer').textContent = `$${globalCalculatedOffer.toLocaleString()}`;
-            document.getElementById('confirmationDate').textContent = formatPickupDateForDisplay(document.getElementById('pickupDate').value);
-            document.getElementById('confirmationTime').textContent = document.getElementById('pickupTime').value;
 
             const confirmation = document.getElementById('finalSuccessContainer');
             confirmation.classList.remove('hidden');
