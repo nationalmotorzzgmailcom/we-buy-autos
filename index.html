@@ -4215,5 +4215,27 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+
+<script>
+(function () {
+  const firstPage = document.getElementById('step1');
+  if (!firstPage) return;
+
+  firstPage.querySelectorAll('select').forEach(function (field) {
+    field.addEventListener('change', function () {
+      if (!field.value || !firstPage.classList.contains('active')) return;
+
+      window.setTimeout(function () {
+        window.scrollBy({
+          top: 110,
+          left: 0,
+          behavior: 'smooth'
+        });
+      }, 120);
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
