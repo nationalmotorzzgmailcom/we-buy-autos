@@ -1593,7 +1593,7 @@ body:has(#step5.active) #navFooter #nextBtn::before{
   #step5 .exact-time-wrap select {
     min-height: 60px !important;
     height: 60px !important;
-    padding-left: 16px !important;
+    padding-
   }
 
   #step5 .exact-date-wrap input,
@@ -1694,7 +1694,7 @@ body:has(#step5.active) #navFooter #nextBtn::before{
   }
 
   #step5 .exact-time-wrap select {
-    padding-left: 16px !important;
+    padding-
     padding-right: 38px !important;
   }
 }
@@ -2063,6 +2063,196 @@ body:has(#finalReviewContainer:not(.hidden)) #navFooter {
 }
 </style>
 
+
+
+<style>
+/* FIRST PAGE ONLY — larger content, wider columns, mobile CTA always visible */
+body:has(#step1.active) > div:first-of-type {
+  max-width: 760px !important;
+}
+
+#step1.active {
+  width: 100%;
+}
+
+#step1 > h2.cash-offer-headline {
+  font-size: 2rem !important;
+  line-height: 1.15 !important;
+  margin-bottom: 0.55rem !important;
+  text-align: center;
+}
+
+#step1 > p {
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+  margin-bottom: 1.35rem !important;
+  text-align: center;
+}
+
+#step1 > .space-y-4 {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem 1.25rem !important;
+}
+
+#step1 > .space-y-4 > div {
+  margin-top: 0 !important;
+  min-width: 0;
+}
+
+#step1 label {
+  font-size: 1rem !important;
+  margin-bottom: 0.45rem !important;
+}
+
+#step1 select {
+  min-height: 56px !important;
+  padding: 0.75rem 0.9rem !important;
+  border-radius: 0.8rem !important;
+  font-size: 1rem !important;
+}
+
+#step1 > .mt-8 {
+  margin-top: 1.6rem !important;
+}
+
+#step1 > .mt-8 button {
+  max-width: 460px !important;
+  min-height: 60px !important;
+  font-size: 1.18rem !important;
+}
+
+@media (max-width: 768px) {
+  body:has(#step1.active) {
+    min-height: 100dvh !important;
+    overflow: hidden !important;
+  }
+
+  body:has(#step1.active) > div:first-of-type {
+    min-height: 100dvh !important;
+    height: 100dvh !important;
+    padding: max(14px, env(safe-area-inset-top)) 18px calc(94px + env(safe-area-inset-bottom)) !important;
+    overflow-y: auto !important;
+  }
+
+  body:has(#step1.active) #progressBlock {
+    margin-bottom: 0.9rem !important;
+  }
+
+  #step1 > h2.cash-offer-headline {
+    font-size: clamp(1.65rem, 7vw, 2rem) !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  #step1 > h2.cash-offer-headline::after {
+    margin-top: 0.35rem !important;
+  }
+
+  #step1 > p {
+    font-size: 0.94rem !important;
+    margin-bottom: 0.85rem !important;
+  }
+
+  #step1 > .space-y-4 {
+    grid-template-columns: 1fr !important;
+    gap: 0.72rem !important;
+  }
+
+  #step1 label {
+    font-size: 0.94rem !important;
+    margin-bottom: 0.28rem !important;
+  }
+
+  #step1 select {
+    min-height: 50px !important;
+    height: 50px !important;
+    padding: 0.55rem 0.8rem !important;
+    font-size: 1rem !important;
+  }
+
+  #step1 > .mt-8 {
+    position: static !important;
+    left: 16px;
+    right: 16px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    z-index: 100000;
+    margin: 0 !important;
+  }
+
+  #step1 > .mt-8 button {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 62px !important;
+    font-size: 1.08rem !important;
+    box-shadow: 0 10px 30px rgba(34, 197, 94, 0.35) !important;
+  }
+}
+
+@media (max-width: 390px), (max-height: 700px) and (max-width: 768px) {
+  body:has(#step1.active) > div:first-of-type {
+    padding-top: max(9px, env(safe-area-inset-top)) !important;
+  }
+
+  body:has(#step1.active) #progressBlock {
+    margin-bottom: 0.55rem !important;
+  }
+
+  #step1 > h2.cash-offer-headline {
+    font-size: 1.45rem !important;
+    line-height: 1.08 !important;
+  }
+
+  #step1 > p {
+    font-size: 0.82rem !important;
+    margin-bottom: 0.55rem !important;
+  }
+
+  #step1 > .space-y-4 {
+    gap: 0.48rem !important;
+  }
+
+  #step1 label {
+    font-size: 0.82rem !important;
+    margin-bottom: 0.18rem !important;
+  }
+
+  #step1 select {
+    min-height: 44px !important;
+    height: 44px !important;
+    font-size: 0.94rem !important;
+  }
+}
+</style>
+
+
+<style>
+/* First-page CTA placement only */
+#step1 .first-page-cta-row,
+#step1 #firstPageCtaRow {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  margin-top: 1rem !important;
+  position: static !important;
+}
+
+#step1 .first-page-cta-row button,
+#step1 #firstPageCtaRow button,
+#step1 button[type="button"]:last-of-type {
+  width: 100% !important;
+  position: static !important;
+  inset: auto !important;
+  margin: 0 !important;
+  display: block !important;
+}
+
+@media (max-width: 768px) {
+  #step1 .first-page-cta-row,
+  #step1 #firstPageCtaRow {
+    margin-top: 1rem !important;
+  }
+}
+</style>
+
 </head>
 <body class="bg-black font-sans min-h-screen flex items-center justify-center p-4">
 
@@ -2128,9 +2318,11 @@ body:has(#finalReviewContainer:not(.hidden)) #navFooter {
           </div>
 
           <div class="mt-8 flex justify-center">
-            <button type="button" onclick="changeStep(1)" class="w-full max-w-sm bg-green-500 text-white py-4 px-6 rounded-xl font-black text-lg shadow-md hover:bg-green-600 transition tracking-wide">
+            <div class="first-page-cta-row" id="firstPageCtaRow">
+<button type="button" onclick="changeStep(1)" class="w-full max-w-sm bg-green-500 text-white py-4 px-6 rounded-xl font-black text-lg shadow-md hover:bg-green-600 transition tracking-wide">
               Get An Instant Offer &rarr;
             </button>
+</div>
           </div>
         </div>
 
