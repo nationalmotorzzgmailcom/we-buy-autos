@@ -3,11 +3,6 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <base target="_top">
-  <!-- Premium readable form font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q5HRZK3BLT"></script>
@@ -1999,222 +1994,6 @@ body:has(#finalReviewContainer:not(.hidden)) #navFooter {
 }
 </style>
 
-
-
-<!-- FINAL DESIGN REFRESH: larger typography + centered layout -->
-<style>
-  html,
-  body,
-  button,
-  input,
-  select,
-  textarea,
-  .custom-select-button,
-  .custom-select-option {
-    font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
-  }
-
-  body {
-    padding: 32px 24px !important;
-  }
-
-  /* Keep the complete experience centered with visible space on both sides. */
-  body > div {
-    width: calc(100% - 48px) !important;
-    max-width: 680px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding: 38px 42px !important;
-  }
-
-  #formContainer,
-  #offerResultContainer,
-  #notPurchasingContainer,
-  #finalReviewContainer,
-  #finalSuccessContainer,
-  #offerForm,
-  .step.active {
-    width: 100% !important;
-    max-width: 590px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-
-  /* Main opening headline. */
-  #step1 > h2 {
-    max-width: 590px;
-    margin: 0 auto 14px !important;
-    font-size: clamp(2.75rem, 7vw, 4.35rem) !important;
-    line-height: 1.02 !important;
-    font-weight: 900 !important;
-    letter-spacing: -0.045em !important;
-    text-align: center !important;
-    text-wrap: balance;
-  }
-
-  #step1 > p {
-    max-width: 520px;
-    margin: 0 auto 30px !important;
-    font-size: 1.18rem !important;
-    line-height: 1.55 !important;
-    text-align: center !important;
-  }
-
-  /* Larger, easier-to-read headings and explanatory copy. */
-  .step > h2:not(#step1 > h2),
-  #offerResultContainer h2,
-  #notPurchasingContainer h2,
-  #finalReviewContainer h2,
-  #finalSuccessContainer h2 {
-    font-size: clamp(1.8rem, 4vw, 2.35rem) !important;
-    line-height: 1.18 !important;
-    font-weight: 900 !important;
-  }
-
-  .step > p,
-  #offerResultContainer p,
-  #notPurchasingContainer p,
-  #finalReviewContainer p,
-  #finalSuccessContainer p {
-    font-size: 1.08rem !important;
-    line-height: 1.55 !important;
-  }
-
-  #progressBlock {
-    max-width: 590px !important;
-    margin: 0 auto 30px !important;
-  }
-
-  #progressBlock .text-xs {
-    font-size: 0.86rem !important;
-    line-height: 1.35 !important;
-  }
-
-  #progressBlock .h-2 {
-    height: 10px !important;
-  }
-
-  #offerForm .space-y-4 > :not([hidden]) ~ :not([hidden]) {
-    margin-top: 1.45rem !important;
-  }
-
-  #offerForm label:not(.modern-photo-card):not(.photo-upload-box),
-  #step5 label {
-    font-size: 1.08rem !important;
-    line-height: 1.35 !important;
-    font-weight: 800 !important;
-    margin-bottom: 0.55rem !important;
-  }
-
-  input,
-  select,
-  textarea,
-  .custom-select-button {
-    min-height: 62px !important;
-    padding: 15px 17px !important;
-    border-radius: 15px !important;
-    font-size: 1.16rem !important;
-    line-height: 1.35 !important;
-  }
-
-  .custom-select-button {
-    padding-right: 3rem !important;
-  }
-
-  .custom-select-option {
-    min-height: 52px !important;
-    padding: 0.82rem 0.9rem !important;
-    font-size: 1.08rem !important;
-  }
-
-  #navFooter {
-    max-width: 590px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    gap: 14px !important;
-    padding-top: 26px !important;
-  }
-
-  #navFooter button,
-  #offerForm button,
-  #offerResultContainer button,
-  #notPurchasingContainer button,
-  #finalReviewContainer button,
-  #finalSuccessContainer button {
-    min-height: 64px;
-    border-radius: 15px !important;
-    font-size: 1.16rem !important;
-    line-height: 1.2 !important;
-    font-weight: 850 !important;
-    padding: 14px 20px !important;
-  }
-
-  @media (max-width: 640px) {
-    body {
-      padding: 14px 12px 24px !important;
-      align-items: flex-start !important;
-    }
-
-    body > div {
-      width: calc(100% - 16px) !important;
-      max-width: 680px !important;
-      margin: 8px auto 20px !important;
-      padding: 28px 22px !important;
-      border-radius: 20px !important;
-    }
-
-    #formContainer,
-    #offerResultContainer,
-    #notPurchasingContainer,
-    #finalReviewContainer,
-    #finalSuccessContainer,
-    #offerForm,
-    .step.active {
-      max-width: 100% !important;
-    }
-
-    #step1 > h2 {
-      font-size: clamp(2.35rem, 11.5vw, 3.35rem) !important;
-      line-height: 1.02 !important;
-      margin-bottom: 12px !important;
-    }
-
-    #step1 > p {
-      font-size: 1.05rem !important;
-      margin-bottom: 25px !important;
-    }
-
-    input,
-    select,
-    textarea,
-    .custom-select-button {
-      min-height: 58px !important;
-      font-size: 1.08rem !important;
-    }
-
-    #navFooter button,
-    #offerForm button,
-    #offerResultContainer button,
-    #notPurchasingContainer button,
-    #finalReviewContainer button,
-    #finalSuccessContainer button {
-      min-height: 60px;
-      font-size: 1.08rem !important;
-    }
-  }
-
-  @media (max-width: 390px) {
-    body > div {
-      width: calc(100% - 12px) !important;
-      padding: 24px 17px !important;
-    }
-
-    #step1 > h2 {
-      font-size: 2.25rem !important;
-    }
-  }
-</style>
-
 </head>
 <body class="bg-black font-sans min-h-screen flex items-center justify-center p-4">
 
@@ -3479,19 +3258,31 @@ body:has(#finalReviewContainer:not(.hidden)) #navFooter {
       }, 30000);
 
       try {
-        if (
-          typeof google === 'undefined' ||
-          !google.script ||
-          !google.script.run
-        ) {
-          restoreReviewWithError(
-            'The form could not connect to Google Apps Script. Make sure this HTML file is running from your Apps Script web app deployment.'
-          );
-          return;
-        }
+        const backendUrl = '/.netlify/functions/submit-lead';
 
-        google.script.run
-          .withSuccessHandler(function(result) {
+        fetch(backendUrl, {
+          method: 'POST',
+          redirect: 'follow',
+          headers: {
+            // text/plain avoids an unnecessary CORS preflight with Apps Script.
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(formData)
+        })
+          .then(function(response) {
+            if (!response.ok) {
+              throw new Error('Server returned HTTP ' + response.status);
+            }
+            return response.text();
+          })
+          .then(function(responseText) {
+            let result;
+            try {
+              result = JSON.parse(responseText);
+            } catch (parseError) {
+              throw new Error('The server returned an invalid response.');
+            }
+
             if (submissionFinished) return;
             submissionFinished = true;
             window.clearTimeout(submissionTimeout);
@@ -3520,14 +3311,13 @@ body:has(#finalReviewContainer:not(.hidden)) #navFooter {
             void confirmation.offsetWidth;
             confirmation.classList.add('screen-reveal');
           })
-          .withFailureHandler(function(error) {
+          .catch(function(error) {
             console.error(error);
             restoreReviewWithError(
               'Submission failed: ' +
               (error && error.message ? error.message : String(error || 'Unknown error'))
             );
-          })
-          .processForm(formData);
+          });
       } catch (error) {
         console.error(error);
         restoreReviewWithError(
