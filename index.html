@@ -1961,6 +1961,29 @@ margin-top:.2rem;
 }
 </style>
 
+
+<style>
+/* Preview: full-width bottom CTA */
+body:has(#step5.active) #navFooter{
+  grid-template-columns: 1fr !important;
+}
+body:has(#step5.active) #navFooter #prevBtn{
+  display:none !important;
+}
+body:has(#step5.active) #navFooter #nextBtn{
+  width:100% !important;
+  min-height:78px !important;
+  height:78px !important;
+  border-radius:16px !important;
+  font-size:24px !important;
+  font-weight:900 !important;
+  padding:0 24px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+</style>
+
 </head>
 <body class="bg-black font-sans min-h-screen flex items-center justify-center p-4">
 
@@ -3964,6 +3987,83 @@ document.addEventListener('DOMContentLoaded',()=>{
  const hr=new Date().getHours();
  if(hr>=14){el.style.display='none';}
 });
+</script>
+
+
+<script>
+/* TEMPORARY PREVIEW MODE:
+   Start directly on Schedule Your Payout & Pickup.
+   Earlier pages remain in the file but are not shown. */
+(function () {
+  function openPickupPreview() {
+    const formContainer = document.getElementById('formContainer');
+    const progressBlock = document.getElementById('progressBlock');
+    const navFooter = document.getElementById('navFooter');
+    const previousButton = document.getElementById('prevBtn');
+    const nextButton = document.getElementById('nextBtn');
+    const pickupStep = document.getElementById('step5');
+
+    document.querySelectorAll('.step').forEach(function (step) {
+      step.classList.remove('active', 'slide-back');
+    });
+
+    [
+      'offerResultContainer',
+      'notPurchasingContainer',
+      'finalReviewContainer',
+      'finalSuccessContainer',
+      'loadingOverlay',
+      'acceptOfferLoadingOverlay'
+    ].forEach(function (id) {
+      const element = document.getElementById(id);
+      if (element) element.classList.add('hidden');
+    });
+
+    if (formContainer) formContainer.classList.remove('hidden');
+    if (progressBlock) progressBlock.classList.add('hidden');
+    if (pickupStep) pickupStep.classList.add('active');
+
+    // Prevent hidden required fields from blocking the pickup-page preview flow.
+    document.querySelectorAll('#step1 [required], #step2 [required], #step3 [required], #step4 [required]').forEach(function (field) {
+      field.dataset.previewWasRequired = 'true';
+      field.required = false;
+    });
+
+    window.currentStep = 5;
+    try { currentStep = 5; } catch (error) {}
+
+    if (navFooter) navFooter.classList.remove('hidden');
+
+    // Nothing before this page should be visible or reachable in preview mode.
+    if (previousButton) {
+      previousButton.style.display = 'none';
+      previousButton.style.visibility = 'hidden';
+      previousButton.onclick = null;
+    }
+
+    if (nextButton) {
+      nextButton.disabled = false;
+      nextButton.classList.remove('opacity-60', 'cursor-not-allowed');
+      nextButton.innerText = 'Schedule Your Free Pickup';
+      nextButton.onclick = function () {
+        finalizeFullFormSubmission();
+      };
+    }
+
+    if (typeof updateConditionalSameDayPromo === 'function') {
+      updateConditionalSameDayPromo();
+    }
+    if (typeof setMinimumPickupDate === 'function') {
+      setMinimumPickupDate();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', openPickupPreview);
+  } else {
+    openPickupPreview();
+  }
+})();
 </script>
 
 </body>
